@@ -1,7 +1,9 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Web.HackerNews
-       ( -- * API Calls
-         getStory
+       ( -- * Hacker News Monad
+         hackerNews
+         -- * API Calls
+       , getStory
        , getComment
        , getPoll
        , getPollOpt
@@ -9,7 +11,8 @@ module Web.HackerNews
        , getTopStories
        , getMaxItem
        , getUpdates
-       -- * Types
+         -- * Types
+       , HackerNews
        , Comment   (..)
        , CommentId (..)
        , Poll      (..)
@@ -29,45 +32,45 @@ import           Data.Monoid                ((<>))
 
 import           Web.HackerNews.Types
 import           Web.HackerNews.Util        (toText)
-import           Web.HackerNews.Client      (getItem)
+import           Web.HackerNews.Client
 
 ------------------------------------------------------------------------------
 -- | Retrieve a `Story` by `StoryId`
-getStory :: StoryId -> IO (Maybe Story)
-getStory (StoryId storyid) = getItem $ "item/" <> toText storyid
+getStory :: StoryId -> HackerNews (Maybe Story)
+getStory (StoryId storyid) = buildHNRequest $ "item/" <> toText storyid
 
 ------------------------------------------------------------------------------
 -- | Retrieve a `Comment` by `CommentId`
-getComment :: CommentId -> IO (Maybe Comment)
-getComment (CommentId commentid) = getItem $ "item/" <> toText commentid
+getComment :: CommentId -> HackerNews (Maybe Comment)
+getComment (CommentId commentid) = buildHNRequest $ "item/" <> toText commentid
 
 ------------------------------------------------------------------------------
 -- | Retrieve a `Poll` by `PollId`
-getPoll :: PollId -> IO (Maybe Poll)
-getPoll (PollId pollid) = getItem $ "item/" <> toText pollid
+getPoll :: PollId -> HackerNews (Maybe Poll)
+getPoll (PollId pollid) = buildHNRequest $ "item/" <> toText pollid
 
 ------------------------------------------------------------------------------
 -- | Retrieve a `PollOpt` by `PollOptId`
-getPollOpt :: PollOptId -> IO (Maybe PollOpt)
-getPollOpt (PollOptId polloptid) = getItem $ "item/" <> toText polloptid
+getPollOpt :: PollOptId -> HackerNews (Maybe PollOpt)
+getPollOpt (PollOptId polloptid) = buildHNRequest $ "item/" <> toText polloptid
 
 ------------------------------------------------------------------------------
 -- | Retrieve a `User` by `UserId`
-getUser :: UserId -> IO (Maybe User)
-getUser (UserId userid) = getItem $ "user/" <> userid
+getUser :: UserId -> HackerNews (Maybe User)
+getUser (UserId userid) = buildHNRequest $ "user/" <> userid
 
 ------------------------------------------------------------------------------
 -- | Retrieve the Top Stories on Hacker News
-getTopStories :: IO (Maybe TopStories)
-getTopStories = getItem "topstories"
+getTopStories :: HackerNews (Maybe TopStories)
+getTopStories = buildHNRequest "topstories"
 
 ------------------------------------------------------------------------------
 -- | Retrieve the largest ItemId
-getMaxItem :: IO (Maybe MaxItem)
-getMaxItem = getItem "maxitem"
+getMaxItem :: HackerNews (Maybe MaxItem)
+getMaxItem = buildHNRequest "maxitem"
 
 ------------------------------------------------------------------------------
 -- | Retrieve the latest updates
-getUpdates :: IO (Maybe Update)
-getUpdates = getItem "updates"
+getUpdates :: HackerNews (Maybe Update)
+getUpdates = buildHNRequest "updates"
 

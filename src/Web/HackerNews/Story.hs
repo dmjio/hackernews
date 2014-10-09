@@ -27,6 +27,9 @@ newtype StoryId
   = StoryId Int
   deriving (Show, Eq)
 
+type TopStories = [Int]
+type MaxItem    = Int
+
 ------------------------------------------------------------------------------
 -- | JSON Instances
 instance FromJSON Story where
