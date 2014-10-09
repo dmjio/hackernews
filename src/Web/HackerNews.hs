@@ -67,7 +67,7 @@ getMaxItem :: IO (Maybe MaxItem)
 getMaxItem = getItem "maxitem"
 
 ------------------------------------------------------------------------------
--- | Retrieve the largest ItemId
+-- | Retrieve the latest updates
 getUpdates :: IO (Maybe Update)
 getUpdates = getItem "updates"
 
