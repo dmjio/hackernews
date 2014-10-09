@@ -4,7 +4,7 @@ module Web.HackerNews.User where
 import           Control.Applicative ((<*>), (<$>))
 import           Control.Monad       (MonadPlus (mzero))
 import           Data.Aeson          (FromJSON (parseJSON), Value (Object),
-                                      (.:))
+                                      (.:), (.:?))
 import           Data.Text           (Text)
 import           Data.Time           (UTCTime)
 
@@ -13,7 +13,7 @@ import           Web.HackerNews.Util (fromSeconds)
 ------------------------------------------------------------------------------
 -- | Types
 data User = User {
-    userAbout     :: Text
+    userAbout     :: Maybe Text
   , userCreated   :: UTCTime
   , userDelay     :: Int
   , userId        :: UserId
@@ -29,7 +29,7 @@ newtype UserId
 -- | JSON Instances
 instance FromJSON User where
   parseJSON (Object o) =
-     User <$> o .: "about"
+     User <$> o .:? "about"
           <*> (fromSeconds <$> o .: "created")
           <*> o .: "delay"
           <*> (UserId <$> o .: "id")
