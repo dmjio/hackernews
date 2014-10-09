@@ -32,22 +32,22 @@ import           Web.HackerNews.Util        (toText)
 import           Web.HackerNews.Client      (getItem)
 
 ------------------------------------------------------------------------------
--- | Retrieve a `Story` by `StoryID`
+-- | Retrieve a `Story` by `StoryId`
 getStory :: StoryId -> IO (Maybe Story)
 getStory (StoryId storyid) = getItem $ "item/" <> toText storyid
 
 ------------------------------------------------------------------------------
--- | Retrieve a `Comment` by `CommentID`
+-- | Retrieve a `Comment` by `CommentId`
 getComment :: CommentId -> IO (Maybe Comment)
 getComment (CommentId commentid) = getItem $ "item/" <> toText commentid
 
 ------------------------------------------------------------------------------
--- | Retrieve a `Poll` by `PollID`
+-- | Retrieve a `Poll` by `PollId`
 getPoll :: PollId -> IO (Maybe Poll)
 getPoll (PollId pollid) = getItem $ "item/" <> toText pollid
 
 ------------------------------------------------------------------------------
--- | Retrieve a `PollOpt` by `PollOptID`
+-- | Retrieve a `PollOpt` by `PollOptId`
 getPollOpt :: PollOptId -> IO (Maybe PollOpt)
 getPollOpt (PollOptId polloptid) = getItem $ "item/" <> toText polloptid
 
