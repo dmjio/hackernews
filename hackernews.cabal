@@ -1,0 +1,51 @@
+name:                hackernews
+version:             0.1.0.0
+description:         API for news.ycombinator.com
+license:             MIT
+synopsis:            API for Hacker News
+license-file:        LICENSE
+author:              David Johnson
+maintainer:          djohnson.m@gmail.com
+category:            Web
+build-type:          Simple
+cabal-version:       >=1.10
+
+library
+  ghc-options:         -Wall
+  exposed-modules:     Web.HackerNews
+  other-modules:       Web.HackerNews.Types
+                     , Web.HackerNews.Client
+                     , Web.HackerNews.User
+                     , Web.HackerNews.Poll
+                     , Web.HackerNews.Person
+                     , Web.HackerNews.Update
+                     , Web.HackerNews.Comment
+                     , Web.HackerNews.Story
+                     , Web.HackerNews.Util
+  hs-source-dirs:      src
+  build-depends:       HsOpenSSL >= 0.10.5
+                     , aeson
+                     , attoparsec >= 0.12.1.2
+                     , base >=4.7 && <4.8
+                     , bytestring >= 0.10.4.0
+                     , hspec >= 1.11.4
+                     , http-streams
+                     , io-streams >= 1.1.4.6
+                     , text >= 1.2.0.0
+                     , time >= 1.4.2
+  default-language:    Haskell2010
+
+Test-Suite tests
+    type:                exitcode-stdio-1.0
+    hs-source-dirs:      tests
+    main-is:             Test.hs
+    build-depends:       base
+                       , hackernews
+                       , hspec
+                       , hspec >= 1.11.4
+    default-language:    Haskell2010
+    ghc-options:         -Wall
+
+source-repository head
+  type:     git
+  location: https://github.com/dmjio/hackernews
