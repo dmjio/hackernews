@@ -41,5 +41,19 @@ main = print =<< hackerNews (liftM3 (,,) one two three)
 ```
 
 ```bash
-(Just (User {userAbout = Just "", userCreated = 2013-08-06 16:49:23 UTC, userDelay = 0, userId = UserId "dmjio", userKarma = 6, userSubmitted = [8433827,8429256,8429161,8429069,8374809,8341570,7919268,7825469,7350544,7327291,6495994,6352317,6168527,6168524,6167639]}),Just (User {userAbout = Nothing, userCreated = 2007-04-11 05:57:35 UTC, userDelay = 0, userId = UserId "dmj", userKarma = 1, userSubmitted = [11737]}),Nothing)
+(Just (User { userAbout = Just ""
+            , userCreated = 2013-08-06 16:49:23 UTC
+            , userDelay = 0
+            , userId = UserId "dmjio"
+            , userKarma = 6
+            , userSubmitted = [8433827,8429256,8429161,8429069,8374809,8341570,7919268,7825469,7350544,7327291,6495994,6352317,6168527,6168524,6167639]})
+      , 
+Just (User { userAbout = Nothing
+           , userCreated = 2007-04-11 05:57:35 UTC
+           , userDelay = 0
+           , userId = UserId "dmj"
+           , userKarma = 1
+           , userSubmitted = [11737]
+           }),
+Nothing)
 ```
