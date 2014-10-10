@@ -4,7 +4,7 @@ module Web.HackerNews.User where
 import           Control.Applicative ((<*>), (<$>))
 import           Control.Monad       (MonadPlus (mzero))
 import           Data.Aeson          (FromJSON (parseJSON), Value (Object),
-                                      (.:), (.:?))
+                                      (.:), (.:?), (.!=))
 import           Data.Text           (Text)
 import           Data.Time           (UTCTime)
 
@@ -19,6 +19,7 @@ data User = User {
   , userId        :: UserId
   , userKarma     :: Int
   , userSubmitted :: [Int]
+  , userDeleted   :: Bool
   } deriving (Show)
 
 newtype UserId
@@ -35,5 +36,6 @@ instance FromJSON User where
           <*> (UserId <$> o .: "id")
           <*> o .: "karma"
           <*> o .: "submitted"
+          <*> o .:? "deleted" .!= False
   parseJSON _ = mzero
 

@@ -1,5 +1,5 @@
 name:                hackernews
-version:             0.2.1.1
+version:             0.2.2.1
 description:         API for news.ycombinator.com
 license:             MIT
 synopsis:            API for Hacker News
@@ -11,7 +11,7 @@ build-type:          Simple
 cabal-version:       >=1.10
 
 library
-  ghc-options:         -Wall
+  ghc-options:         -Wall -threaded
   exposed-modules:     Web.HackerNews
   other-modules:       Web.HackerNews.Types
                      , Web.HackerNews.Client
@@ -26,7 +26,7 @@ library
   build-depends:       HsOpenSSL    >= 0.10.5
                      , aeson        >= 0.8.0.1
                      , attoparsec   >= 0.12.1.2
-                     , base         >=4.7 && <4.8
+                     , base         >= 4.7 && <4.8
                      , bytestring   >= 0.10.4.0
                      , http-streams >= 0.7.2.2
                      , io-streams   >= 1.1.4.6
@@ -37,6 +37,7 @@ library
 
 Test-Suite tests
     type:                exitcode-stdio-1.0
+    ghc-options: -rtsopts -threaded
     hs-source-dirs:      tests
     main-is:             Test.hs
     build-depends:       base
