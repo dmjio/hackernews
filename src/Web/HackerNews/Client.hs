@@ -31,7 +31,7 @@ hackerNews requests =
   withOpenSSL $ do
     ctx <- baselineContextSSL
     con <- openConnectionSSL ctx "hacker-news.firebaseio.com" 443
-    result <- flip runReaderT con requests
+    result <- runReaderT requests con 
     closeConnection con
     return result
 
@@ -46,7 +46,7 @@ buildHNRequest url = do
         setHeader "Connection" "Keep-Alive"
         setAccept "application/json"
       sendRequest con req emptyBody
-      !bytes <- receiveResponse con $ const $ Streams.read
+      !bytes <- receiveResponse con $ const Streams.read
       return $ case bytes of
         Nothing -> Nothing
         Just bs -> do

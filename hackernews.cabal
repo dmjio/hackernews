@@ -28,7 +28,6 @@ library
                      , attoparsec   >= 0.12.1.2
                      , base         >=4.7 && <4.8
                      , bytestring   >= 0.10.4.0
-                     , hspec >= 1.11.4
                      , http-streams >= 0.7.2.2
                      , io-streams   >= 1.1.4.6
                      , text         >= 1.2.0.0
@@ -42,8 +41,6 @@ Test-Suite tests
     main-is:             Test.hs
     build-depends:       base
                        , hackernews
-                       , hspec
-                       , hspec >= 1.11.4
                        , hspec >= 1.11.4
                        , transformers
     default-language:    Haskell2010
