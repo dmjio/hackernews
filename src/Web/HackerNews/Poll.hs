@@ -1,10 +1,10 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Web.HackerNews.Poll where
 
-import           Control.Applicative ((<*>), (<$>))
+import           Control.Applicative ((<$>), (<*>))
 import           Control.Monad       (MonadPlus (mzero))
 import           Data.Aeson          (FromJSON (parseJSON), Value (Object),
-                                      (.:))
+                                      (.:), (.!=), (.:?))
 import           Data.Text           (Text)
 import           Data.Time           (UTCTime)
 
@@ -13,25 +13,27 @@ import           Web.HackerNews.Util (fromSeconds)
 ------------------------------------------------------------------------------
 -- | Types
 data Poll = Poll {
-    pollBy    :: Text
-  , pollId    :: PollId
-  , pollKids  :: [Int]
-  , pollParts :: [Int]
-  , pollScore :: Int
-  , pollText  :: Text
-  , pollTime  :: UTCTime
-  , pollTitle :: Text
-  , pollType  :: Text
+    pollBy      :: Text
+  , pollId      :: PollId
+  , pollKids    :: [Int]
+  , pollParts   :: [Int]
+  , pollScore   :: Int
+  , pollText    :: Text
+  , pollTime    :: UTCTime
+  , pollTitle   :: Text
+  , pollType    :: Text
+  , pollDeleted :: Bool
   } deriving (Show, Eq)
 
 data PollOpt = PollOpt {
-    pollOptBy     :: Text
-  , pollOptId     :: PollOptId
-  , pollOptParent :: Int
-  , pollOptScore  :: Int
-  , pollOptText   :: Text
-  , pollOptTime   :: UTCTime
-  , pollOptType   :: Text
+    pollOptBy      :: Text
+  , pollOptId      :: PollOptId
+  , pollOptParent  :: Int
+  , pollOptScore   :: Int
+  , pollOptText    :: Text
+  , pollOptTime    :: UTCTime
+  , pollOptType    :: Text
+  , pollOptDeleted :: Bool
   } deriving (Show, Eq)
 
 newtype PollOptId
@@ -55,6 +57,7 @@ instance FromJSON Poll where
           <*> (fromSeconds <$> o .: "time")
           <*> o .: "title"
           <*> o .: "type"
+          <*> o .:? "deleted" .!= False
   parseJSON _ = mzero
 
 instance FromJSON PollOpt where
@@ -66,4 +69,5 @@ instance FromJSON PollOpt where
              <*> o .: "text"
              <*> (fromSeconds <$> o .: "time")
              <*> o .: "type"
+             <*> o .:? "deleted" .!= False
   parseJSON _ = mzero

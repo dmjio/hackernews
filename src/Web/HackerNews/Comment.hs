@@ -4,7 +4,7 @@ module Web.HackerNews.Comment where
 import           Control.Applicative ((<$>), (<*>))
 import           Control.Monad       (MonadPlus (mzero))
 import           Data.Aeson          (FromJSON (parseJSON), Value (Object),
-                                      (.:), (.:?))
+                                      (.:), (.:?), (.!=))
 import           Data.Text           (Text)
 import           Data.Time           (UTCTime)
 
@@ -20,6 +20,7 @@ data Comment = Comment {
   , commentText   :: Text
   , commentTime   :: UTCTime
   , commentType   :: Text
+  , commentDeleted :: Bool
   } deriving Show
 
 newtype CommentId
@@ -37,6 +38,7 @@ instance FromJSON Comment where
              <*> o .: "text"
              <*> (fromSeconds <$> o .: "time")
              <*> o .: "type"
+             <*> o .:? "deleted" .!= False
   parseJSON _ = mzero
 
 

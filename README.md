@@ -27,23 +27,19 @@ Finished in 0.0019 seconds
 
 ###Usage
 ```haskell 
-module Main where
+module Example where
 
-import Web.HackerNews (StoryId (..), getStory)
+import           Control.Monad  (liftM3)
+import           Web.HackerNews (UserId (..), getUser, hackerNews)
 
 main :: IO ()
-main = getStory (StoryId 8863) >>= print
+main = print =<< hackerNews (liftM3 (,,) one two three)
+  where
+    one   = getUser (UserId "dmjio")
+    two   = getUser (UserId "dmj")
+    three = getUser (UserId "abs")
 ```
 
 ```bash
-Just (Story {
-  storyBy = "dhouston"
-, storyId = 8863
-, storyKids = [8952,9224,8917, ... ]
-, storyScore = 111
-, storyTime = 2007-04-04 19:16:40 UTC
-, storyTitle = "My YC app: Dropbox - Throw away your USB drive"
-, storyType = "story"
-, storyUrl = "http://www.getdropbox.com/u/2/screencast.html"
-})
+(Just (User {userAbout = Just "", userCreated = 2013-08-06 16:49:23 UTC, userDelay = 0, userId = UserId "dmjio", userKarma = 6, userSubmitted = [8433827,8429256,8429161,8429069,8374809,8341570,7919268,7825469,7350544,7327291,6495994,6352317,6168527,6168524,6167639]}),Just (User {userAbout = Nothing, userCreated = 2007-04-11 05:57:35 UTC, userDelay = 0, userId = UserId "dmj", userKarma = 1, userSubmitted = [11737]}),Nothing)
 ```
