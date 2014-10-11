@@ -8,7 +8,7 @@ import           Data.Aeson          (FromJSON (parseJSON), Value (Object),
 import           Data.Text           (Text)
 import           Data.Time           (UTCTime)
 
-import           Web.HackerNews.Util (fromSeconds)
+import           Web.HackerNews.Util (fromSeconds, monoidToMaybe)
 
 ------------------------------------------------------------------------------
 -- | Types
@@ -30,7 +30,7 @@ newtype UserId
 -- | JSON Instances
 instance FromJSON User where
   parseJSON (Object o) =
-     User <$> o .:? "about"
+     User <$> ((monoidToMaybe =<<) <$> (o .:? "about"))
           <*> (fromSeconds <$> o .: "created")
           <*> o .: "delay"
           <*> (UserId <$> o .: "id")
