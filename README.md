@@ -41,7 +41,7 @@ main = print =<< hackerNews (liftM3 (,,) one two three)
 ```
 
 ```bash
-(Just (User { userAbout = Just ""
+(Just (User { userAbout = Nothing
             , userCreated = 2013-08-06 16:49:23 UTC
             , userDelay = 0
             , userId = UserId "dmjio"
