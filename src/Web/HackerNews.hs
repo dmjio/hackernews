@@ -3,6 +3,7 @@ module Web.HackerNews
        ( -- * Hacker News Monad
          hackerNews
          -- * API Calls
+       , getItem
        , getStory
        , getComment
        , getPoll
@@ -14,6 +15,8 @@ module Web.HackerNews
        , getUpdates
          -- * Types
        , HackerNews
+       , Item      (..)
+       , ItemId    (..)
        , Comment   (..)
        , CommentId (..)
        , Poll      (..)
@@ -36,6 +39,10 @@ import           Data.Monoid                ((<>))
 import           Web.HackerNews.Types
 import           Web.HackerNews.Util        (toText)
 import           Web.HackerNews.Client
+
+-- | Retrieve a `Item` by `ItemId`
+getItem :: ItemId -> HackerNews (Maybe Item)
+getItem (ItemId itemid) = buildHNRequest $ "item/" <> toText itemid
 
 ------------------------------------------------------------------------------
 -- | Retrieve a `Story` by `StoryId`

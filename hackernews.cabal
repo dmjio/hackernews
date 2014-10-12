@@ -1,5 +1,5 @@
 name:                hackernews
-version:             0.2.3.2
+version:             0.2.4.2
 description:         API for news.ycombinator.com
 license:             MIT
 synopsis:            API for Hacker News
@@ -22,6 +22,7 @@ library
                      , Web.HackerNews.Comment
                      , Web.HackerNews.Story
                      , Web.HackerNews.Job
+                     , Web.HackerNews.Item
                      , Web.HackerNews.Util
   hs-source-dirs:      src
   build-depends:       HsOpenSSL    >= 0.10.5
