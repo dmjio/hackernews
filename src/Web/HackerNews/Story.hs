@@ -14,7 +14,7 @@ import           Web.HackerNews.Util (fromSeconds)
 -- | Types
 data Story = Story {
     storyBy      :: Text
-  , storyId      :: Int
+  , storyId      :: StoryId
   , storyKids    :: [Int]
   , storyScore   :: Int
   , storyTime    :: UTCTime
@@ -36,7 +36,7 @@ type MaxItem    = Int
 instance FromJSON Story where
    parseJSON (Object o) =
      Story <$> o .: "by"
-           <*> o .: "id"
+           <*> (StoryId <$> o .: "id")
            <*> o .: "kids"
            <*> o .: "score"
            <*> (fromSeconds <$> o .: "time")
