@@ -9,11 +9,12 @@ import           Control.Applicative
 main :: IO ()
 main = hspec $ do
   describe "Hacker News API Tests" $ do
-    (story, comment, user, poll, pollOpt, topStories, maxItem, updates) <- 
-      runIO $ hackerNews $ (,,,,,,,)   <$> 
+    (story, comment, user, job, poll, pollOpt, topStories, maxItem, updates) <- 
+      runIO $ hackerNews $ (,,,,,,,,)  <$> 
         getStory   (StoryId 8863)      <*>
         getComment (CommentId 2921983) <*>
         getUser    (UserId "dmjio")    <*>
+        getJob     (JobId 8437631)     <*>
         getPoll    (PollId 126809)     <*>
         getPollOpt (PollOptId 160705)  <*>
         getTopStories                  <*>
@@ -22,6 +23,7 @@ main = hspec $ do
     it "Retrieves a Story"     $ isJust story
     it "Retrieves a Comment"   $ isJust comment
     it "Retrieves a User"      $ isJust user
+    it "Retrieves a Job"       $ isJust job
     it "Retrieves a Poll"      $ isJust poll
     it "Retrieves a Pollopt"   $ isJust pollOpt
     it "Retrieves Top Stories" $ isJust topStories

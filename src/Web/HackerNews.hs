@@ -8,6 +8,7 @@ module Web.HackerNews
        , getPoll
        , getPollOpt
        , getUser
+       , getJob
        , getTopStories
        , getMaxItem
        , getUpdates
@@ -23,6 +24,8 @@ module Web.HackerNews
        , StoryId   (..)
        , User      (..)
        , UserId    (..)
+       , Job       (..)
+       , JobId     (..)
        , Update    (..)
        , MaxItem
        , TopStories
@@ -58,6 +61,11 @@ getPollOpt (PollOptId polloptid) = buildHNRequest $ "item/" <> toText polloptid
 -- | Retrieve a `User` by `UserId`
 getUser :: UserId -> HackerNews (Maybe User)
 getUser (UserId userid) = buildHNRequest $ "user/" <> userid
+
+------------------------------------------------------------------------------
+-- | Retrieve a Job
+getJob :: JobId -> HackerNews (Maybe Job)
+getJob (JobId jobid) = buildHNRequest $ "item/" <> toText jobid
 
 ------------------------------------------------------------------------------
 -- | Retrieve the Top Stories on Hacker News
