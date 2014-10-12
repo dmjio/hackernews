@@ -1,12 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Web.HackerNews.Types
        ( module H
-       , StoryId   (..)
-       , CommentId (..)
-       , PollId    (..)
-       , PollOptId (..)
-       , UserId    (..)
-       , ItemId    (..)
        ) where
 
 import           Web.HackerNews.Comment as H
