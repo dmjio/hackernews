@@ -24,6 +24,7 @@ library
                      , Web.HackerNews.Job
                      , Web.HackerNews.Item
                      , Web.HackerNews.Util
+                     , Web.HackerNews.Endpoint
   hs-source-dirs:      src
   build-depends:       HsOpenSSL    >= 0.10.5
                      , aeson        >= 0.8.0.1
