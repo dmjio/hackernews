@@ -1,5 +1,4 @@
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE OverloadedStrings, MultiParamTypeClasses #-}
 module Web.HackerNews.Story where
 
 import           Control.Applicative ((<$>), (<*>))
