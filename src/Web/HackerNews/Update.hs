@@ -1,4 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
 module Web.HackerNews.Update where
 
 import           Control.Applicative ((<$>), (<*>))
@@ -7,6 +8,8 @@ import           Data.Aeson          (FromJSON (parseJSON), Value (Object),
                                       (.:), (.!=), (.:?))
 import           Data.Text           (Text)
 
+import           Web.HackerNews.Endpoint (Endpoint(..))
+
 ------------------------------------------------------------------------------
 -- | Types
 data Update = Update {
@@ -14,6 +17,13 @@ data Update = Update {
   , updateProfiles :: [Text]
   , updateDeleted  :: Bool
   } deriving (Show, Eq)
+
+data UpdateId = UpdateId deriving (Show, Eq)
+
+------------------------------------------------------------------------------
+-- | Endpoint Instances
+instance Endpoint UpdateId Update where
+    endpoint _ = "updates"
 
 ------------------------------------------------------------------------------
 -- | JSON Instances
