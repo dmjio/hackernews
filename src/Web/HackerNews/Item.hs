@@ -15,8 +15,8 @@ import           Web.HackerNews.Job      (Job)
 import           Web.HackerNews.Endpoint (Endpoint(endpoint))
 import           Web.HackerNews.Util     (toText)
 
-newtype ItemId = ItemId Int deriving (Show,Eq)
-
+------------------------------------------------------------------------------
+-- | Types
 data Item = ItemComment Comment
           | ItemPoll Poll
           | ItemPollOpt PollOpt
@@ -24,18 +24,21 @@ data Item = ItemComment Comment
           | ItemJob Job
           deriving (Show)
 
+newtype ItemId = ItemId Int deriving (Show,Eq)
+
 data MaxItemId = MaxItemId deriving (Show, Eq)
 newtype MaxItem = MaxItem Int deriving (Show, Eq)
 
+------------------------------------------------------------------------------
+-- | Endpoint Instances
 instance Endpoint MaxItemId MaxItem where
     endpoint _ = "maxitem"
-
-instance FromJSON MaxItem where
-    parseJSON = fmap MaxItem . parseJSON
 
 instance Endpoint ItemId Item where
     endpoint (ItemId itemId) = "item/" <> toText itemId
 
+------------------------------------------------------------------------------
+-- | JSON Instances
 instance FromJSON Item where
     parseJSON v@(Object o) = do
         itemType <- o .: "type"
@@ -47,3 +50,7 @@ instance FromJSON Item where
             "pollopt" -> ItemPollOpt <$> parseJSON v
             _         -> mzero
     parseJSON _ = mzero
+
+instance FromJSON MaxItem where
+    parseJSON = fmap MaxItem . parseJSON
+

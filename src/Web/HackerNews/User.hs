@@ -30,6 +30,7 @@ newtype UserId
       deriving (Show, Eq)
 
 ------------------------------------------------------------------------------
+-- | Endpoint instances
 instance Endpoint UserId User where
     endpoint (UserId userId) = "user/" <> userId
 

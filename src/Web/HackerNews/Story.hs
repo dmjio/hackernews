@@ -33,6 +33,7 @@ newtype StoryId
 
 data TopStoriesId  = TopStoriesId deriving (Show, Eq)
 newtype TopStories = TopStories [Int] deriving (Show, Eq)
+
 ------------------------------------------------------------------------------
 -- | Endpoint Instances
 instance Endpoint StoryId Story where

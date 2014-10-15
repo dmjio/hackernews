@@ -30,6 +30,7 @@ data Job = Job {
 newtype JobId
       = JobId Int
       deriving (Show, Eq)
+
 ------------------------------------------------------------------------------
 -- | Endpoint Instances
 instance Endpoint JobId Job where
