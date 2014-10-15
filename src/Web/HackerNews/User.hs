@@ -1,14 +1,17 @@
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE OverloadedStrings, MultiParamTypeClasses #-}
 module Web.HackerNews.User where
 
 import           Control.Applicative ((<*>), (<$>))
 import           Control.Monad       (MonadPlus (mzero))
+
 import           Data.Aeson          (FromJSON (parseJSON), Value (Object),
                                       (.:), (.:?), (.!=))
 import           Data.Text           (Text)
 import           Data.Time           (UTCTime)
+import           Data.Monoid         ((<>))
 
 import           Web.HackerNews.Util (fromSeconds, monoidToMaybe)
+import           Web.HackerNews.Endpoint (Endpoint(endpoint))
 
 ------------------------------------------------------------------------------
 -- | Types
@@ -25,6 +28,11 @@ data User = User {
 newtype UserId
       = UserId Text
       deriving (Show, Eq)
+
+------------------------------------------------------------------------------
+-- | Endpoint instances
+instance Endpoint UserId User where
+    endpoint (UserId id') = "user/" <> id'
 
 ------------------------------------------------------------------------------
 -- | JSON Instances

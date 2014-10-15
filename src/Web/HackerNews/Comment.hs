@@ -1,14 +1,16 @@
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE OverloadedStrings, MultiParamTypeClasses #-}
 module Web.HackerNews.Comment where
 
 import           Control.Applicative ((<$>), (<*>))
 import           Control.Monad       (MonadPlus (mzero))
+
 import           Data.Aeson          (FromJSON (parseJSON), Value (Object),
                                       (.:), (.:?), (.!=))
 import           Data.Text           (Text)
 import           Data.Time           (UTCTime)
 
 import           Web.HackerNews.Util (fromSeconds)
+import           Web.HackerNews.Endpoint (Endpoint(endpoint), itemEndpoint)
 
 ------------------------------------------------------------------------------
 -- | Types
@@ -26,6 +28,11 @@ data Comment = Comment {
 newtype CommentId
   = CommentId Int
   deriving (Show, Eq)
+
+------------------------------------------------------------------------------
+-- | Endpoint instances
+instance Endpoint CommentId Comment where
+    endpoint (CommentId id') = itemEndpoint id'
 
 ------------------------------------------------------------------------------
 -- | JSON Instances

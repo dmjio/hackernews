@@ -3,6 +3,7 @@ module Web.HackerNews
        ( -- * Hacker News Monad
          hackerNews
          -- * API Calls
+       , getItem
        , getStory
        , getComment
        , getPoll
@@ -14,6 +15,8 @@ module Web.HackerNews
        , getUpdates
          -- * Types
        , HackerNews
+       , Item      (..)
+       , ItemId    (..)
        , Comment   (..)
        , CommentId (..)
        , Poll      (..)
@@ -31,54 +34,57 @@ module Web.HackerNews
        , TopStories
        ) where
 
-import           Data.Monoid                ((<>))
-
 import           Web.HackerNews.Types
-import           Web.HackerNews.Util        (toText)
-import           Web.HackerNews.Client
+import           Web.HackerNews.Client (HackerNews, hackerNews)
+
+
+------------------------------------------------------------------------------
+-- | Retrieve a `Item` by `ItemId`
+getItem :: ItemId -> HackerNews (Maybe Item)
+getItem = getEndpoint
 
 ------------------------------------------------------------------------------
 -- | Retrieve a `Story` by `StoryId`
 getStory :: StoryId -> HackerNews (Maybe Story)
-getStory (StoryId storyid) = buildHNRequest $ "item/" <> toText storyid
+getStory = getEndpoint
 
 ------------------------------------------------------------------------------
 -- | Retrieve a `Comment` by `CommentId`
 getComment :: CommentId -> HackerNews (Maybe Comment)
-getComment (CommentId commentid) = buildHNRequest $ "item/" <> toText commentid
+getComment = getEndpoint
 
 ------------------------------------------------------------------------------
 -- | Retrieve a `Poll` by `PollId`
 getPoll :: PollId -> HackerNews (Maybe Poll)
-getPoll (PollId pollid) = buildHNRequest $ "item/" <> toText pollid
+getPoll = getEndpoint
 
 ------------------------------------------------------------------------------
 -- | Retrieve a `PollOpt` by `PollOptId`
 getPollOpt :: PollOptId -> HackerNews (Maybe PollOpt)
-getPollOpt (PollOptId polloptid) = buildHNRequest $ "item/" <> toText polloptid
+getPollOpt = getEndpoint
 
 ------------------------------------------------------------------------------
 -- | Retrieve a `User` by `UserId`
 getUser :: UserId -> HackerNews (Maybe User)
-getUser (UserId userid) = buildHNRequest $ "user/" <> userid
+getUser = getEndpoint
 
 ------------------------------------------------------------------------------
 -- | Retrieve a Job
 getJob :: JobId -> HackerNews (Maybe Job)
-getJob (JobId jobid) = buildHNRequest $ "item/" <> toText jobid
+getJob = getEndpoint
 
 ------------------------------------------------------------------------------
 -- | Retrieve the Top Stories on Hacker News
 getTopStories :: HackerNews (Maybe TopStories)
-getTopStories = buildHNRequest "topstories"
+getTopStories = getEndpoint TopStoriesId
 
 ------------------------------------------------------------------------------
 -- | Retrieve the largest ItemId
 getMaxItem :: HackerNews (Maybe MaxItem)
-getMaxItem = buildHNRequest "maxitem"
+getMaxItem = getEndpoint MaxItemId
 
 ------------------------------------------------------------------------------
 -- | Retrieve the latest updates
 getUpdates :: HackerNews (Maybe Update)
-getUpdates = buildHNRequest "updates"
+getUpdates = getEndpoint UpdateId
 

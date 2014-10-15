@@ -1,14 +1,16 @@
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE OverloadedStrings, MultiParamTypeClasses #-}
 module Web.HackerNews.Poll where
 
 import           Control.Applicative ((<$>), (<*>))
 import           Control.Monad       (MonadPlus (mzero))
+
 import           Data.Aeson          (FromJSON (parseJSON), Value (Object),
                                       (.:), (.!=), (.:?))
 import           Data.Text           (Text)
 import           Data.Time           (UTCTime)
 
 import           Web.HackerNews.Util (fromSeconds)
+import           Web.HackerNews.Endpoint (Endpoint(endpoint), itemEndpoint)
 
 ------------------------------------------------------------------------------
 -- | Types
@@ -43,6 +45,14 @@ newtype PollOptId
 newtype PollId
   = PollId Int
   deriving (Show, Eq)
+
+------------------------------------------------------------------------------
+-- | Endpoint Instances
+instance Endpoint PollOptId PollOpt where
+    endpoint (PollOptId id') = itemEndpoint id'
+
+instance Endpoint PollId Poll where
+    endpoint (PollId id') = itemEndpoint id'
 
 ------------------------------------------------------------------------------
 -- | JSON Instances
