@@ -1,4 +1,10 @@
 {-# LANGUAGE OverloadedStrings #-}
+-- |
+-- Module      : Web.HackerNews.Person
+-- Copyright   : (c) David Johnson, 2014
+-- Maintainer  : djohnson.m@gmail.com
+-- Stability   : experimental
+-- Portability : POSIX
 module Web.HackerNews.Person where
 
 import           Control.Applicative ((<$>), (<*>))
@@ -11,7 +17,7 @@ import           Data.Time           (UTCTime)
 import           Web.HackerNews.Util (fromSeconds)
 
 ------------------------------------------------------------------------------
--- | Types
+-- | Person Object
 data Person = Person {
     personBy      :: Text
   , personId      :: PersonId
@@ -24,6 +30,8 @@ data Person = Person {
   , personDeleted :: Bool
   } deriving (Show, Eq)
 
+------------------------------------------------------------------------------
+-- | Person ID for a `Person` Object
 newtype PersonId
   = PersonId Text
   deriving (Show, Eq)

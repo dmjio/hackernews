@@ -1,30 +1,38 @@
-{-# LANGUAGE OverloadedStrings, MultiParamTypeClasses #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE OverloadedStrings     #-}
+-- |
+-- Module      : Web.HackerNews.Comment
+-- Copyright   : (c) David Johnson, 2014
+-- Maintainer  : djohnson.m@gmail.com
+-- Stability   : experimental
+-- Portability : POSIX
 module Web.HackerNews.Comment where
 
-import           Control.Applicative ((<$>), (<*>))
-import           Control.Monad       (MonadPlus (mzero))
+import           Control.Applicative     ((<$>), (<*>))
+import           Control.Monad           (MonadPlus (mzero))
+import           Data.Aeson              (FromJSON (parseJSON), Value (Object),
+                                          (.!=), (.:), (.:?))
+import           Data.Text               (Text)
+import           Data.Time               (UTCTime)
 
-import           Data.Aeson          (FromJSON (parseJSON), Value (Object),
-                                      (.:), (.:?), (.!=))
-import           Data.Text           (Text)
-import           Data.Time           (UTCTime)
-
-import           Web.HackerNews.Util (fromSeconds)
-import           Web.HackerNews.Endpoint (Endpoint(endpoint), itemEndpoint)
+import           Web.HackerNews.Endpoint (Endpoint (endpoint), itemEndpoint)
+import           Web.HackerNews.Util     (fromSeconds)
 
 ------------------------------------------------------------------------------
--- | Types
+-- | Comment Object
 data Comment = Comment {
-    commentBy     :: Text
-  , commentId     :: CommentId
-  , commentKids   :: Maybe [Int]
-  , commentParent :: Int
-  , commentText   :: Text
-  , commentTime   :: UTCTime
-  , commentType   :: Text
+    commentBy      :: Text
+  , commentId      :: CommentId
+  , commentKids    :: Maybe [Int]
+  , commentParent  :: Int
+  , commentText    :: Text
+  , commentTime    :: UTCTime
+  , commentType    :: Text
   , commentDeleted :: Bool
   } deriving Show
 
+------------------------------------------------------------------------------
+-- | `CommentId` for a `Comment` Object
 newtype CommentId
   = CommentId Int
   deriving (Show, Eq)

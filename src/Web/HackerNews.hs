@@ -1,4 +1,10 @@
 {-# LANGUAGE OverloadedStrings #-}
+-- |
+-- Module      : Web.HackerNews
+-- Copyright   : (c) David Johnson, 2014
+-- Maintainer  : djohnson.m@gmail.com
+-- Stability   : experimental
+-- Portability : POSIX
 module Web.HackerNews
        ( -- * Hacker News Monad
          hackerNews
@@ -36,7 +42,6 @@ module Web.HackerNews
 
 import           Web.HackerNews.Types
 import           Web.HackerNews.Client (HackerNews, hackerNews)
-
 
 ------------------------------------------------------------------------------
 -- | Retrieve a `Item` by `ItemId`

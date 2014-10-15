@@ -1,5 +1,11 @@
 {-# LANGUAGE BangPatterns      #-}
 {-# LANGUAGE OverloadedStrings #-}
+-- |
+-- Module      : Web.HackerNews.Client
+-- Copyright   : (c) David Johnson, 2014
+-- Maintainer  : djohnson.m@gmail.com
+-- Stability   : experimental
+-- Portability : POSIX
 module Web.HackerNews.Client
        ( hackerNews
        , buildHNRequest
