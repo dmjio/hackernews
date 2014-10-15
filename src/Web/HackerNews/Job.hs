@@ -8,10 +8,9 @@ import           Data.Aeson          (FromJSON (parseJSON), Value (Object),
                                       (.:), (.:?), (.!=))
 import           Data.Text           (Text)
 import           Data.Time           (UTCTime)
-import           Data.Monoid         ((<>))
 
-import           Web.HackerNews.Util (fromSeconds, toText)
-import           Web.HackerNews.Endpoint (Endpoint(endpoint))
+import           Web.HackerNews.Util (fromSeconds)
+import           Web.HackerNews.Endpoint (Endpoint(endpoint), itemEndpoint)
 
 ------------------------------------------------------------------------------
 -- | Types
@@ -34,7 +33,7 @@ newtype JobId
 ------------------------------------------------------------------------------
 -- | Endpoint Instances
 instance Endpoint JobId Job where
-    endpoint (JobId id') = "item/" <> toText id'
+    endpoint (JobId id') = itemEndpoint id'
 
 ------------------------------------------------------------------------------
 -- | JSON Instances

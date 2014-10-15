@@ -32,7 +32,7 @@ newtype UserId
 ------------------------------------------------------------------------------
 -- | Endpoint instances
 instance Endpoint UserId User where
-    endpoint (UserId userId) = "user/" <> userId
+    endpoint (UserId id') = "user/" <> id'
 
 ------------------------------------------------------------------------------
 -- | JSON Instances

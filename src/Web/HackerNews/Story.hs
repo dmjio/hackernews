@@ -8,10 +8,9 @@ import           Data.Aeson          (FromJSON (parseJSON), Value (Object),
                                       (.:), (.!=), (.:?))
 import           Data.Text           (Text)
 import           Data.Time           (UTCTime)
-import           Data.Monoid         ((<>))
 
-import           Web.HackerNews.Util (fromSeconds, toText)
-import           Web.HackerNews.Endpoint (Endpoint(endpoint))
+import           Web.HackerNews.Util (fromSeconds)
+import           Web.HackerNews.Endpoint (Endpoint(endpoint), itemEndpoint)
 
 ------------------------------------------------------------------------------
 -- | Types
@@ -37,7 +36,7 @@ newtype TopStories = TopStories [Int] deriving (Show, Eq)
 ------------------------------------------------------------------------------
 -- | Endpoint Instances
 instance Endpoint StoryId Story where
-    endpoint (StoryId storId) = "item/" <> toText storId
+    endpoint (StoryId id') = itemEndpoint id'
 
 instance Endpoint TopStoriesId TopStories where
     endpoint _ = "topstories"

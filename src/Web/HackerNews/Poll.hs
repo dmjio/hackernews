@@ -8,10 +8,9 @@ import           Data.Aeson          (FromJSON (parseJSON), Value (Object),
                                       (.:), (.!=), (.:?))
 import           Data.Text           (Text)
 import           Data.Time           (UTCTime)
-import           Data.Monoid         ((<>))
 
-import           Web.HackerNews.Util (fromSeconds, toText)
-import           Web.HackerNews.Endpoint (Endpoint(endpoint))
+import           Web.HackerNews.Util (fromSeconds)
+import           Web.HackerNews.Endpoint (Endpoint(endpoint), itemEndpoint)
 
 ------------------------------------------------------------------------------
 -- | Types
@@ -50,10 +49,10 @@ newtype PollId
 ------------------------------------------------------------------------------
 -- | Endpoint Instances
 instance Endpoint PollOptId PollOpt where
-    endpoint (PollOptId pollOptId) = "item/" <> toText pollOptId
+    endpoint (PollOptId id') = itemEndpoint id'
 
 instance Endpoint PollId Poll where
-    endpoint (PollId pollOptId) = "item/" <> toText pollOptId
+    endpoint (PollId id') = itemEndpoint id'
 
 ------------------------------------------------------------------------------
 -- | JSON Instances

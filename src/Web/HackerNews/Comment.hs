@@ -8,10 +8,9 @@ import           Data.Aeson          (FromJSON (parseJSON), Value (Object),
                                       (.:), (.:?), (.!=))
 import           Data.Text           (Text)
 import           Data.Time           (UTCTime)
-import           Data.Monoid         ((<>))
 
-import           Web.HackerNews.Util (fromSeconds, toText)
-import           Web.HackerNews.Endpoint (Endpoint(endpoint))
+import           Web.HackerNews.Util (fromSeconds)
+import           Web.HackerNews.Endpoint (Endpoint(endpoint), itemEndpoint)
 
 ------------------------------------------------------------------------------
 -- | Types
@@ -33,7 +32,7 @@ newtype CommentId
 ------------------------------------------------------------------------------
 -- | Endpoint instances
 instance Endpoint CommentId Comment where
-    endpoint (CommentId commId) = "item/" <> toText commId
+    endpoint (CommentId id') = itemEndpoint id'
 
 ------------------------------------------------------------------------------
 -- | JSON Instances

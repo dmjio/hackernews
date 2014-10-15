@@ -6,14 +6,12 @@ import           Control.Monad       (MonadPlus (mzero))
 
 import           Data.Aeson          (FromJSON (parseJSON), Value (Object), (.:))
 import           Data.Text           (Text)
-import           Data.Monoid         ((<>))
 
 import           Web.HackerNews.Comment  (Comment)
 import           Web.HackerNews.Poll     (Poll, PollOpt)
 import           Web.HackerNews.Story    (Story)
 import           Web.HackerNews.Job      (Job)
-import           Web.HackerNews.Endpoint (Endpoint(endpoint))
-import           Web.HackerNews.Util     (toText)
+import           Web.HackerNews.Endpoint (Endpoint(endpoint), itemEndpoint)
 
 ------------------------------------------------------------------------------
 -- | Types
@@ -35,7 +33,7 @@ instance Endpoint MaxItemId MaxItem where
     endpoint _ = "maxitem"
 
 instance Endpoint ItemId Item where
-    endpoint (ItemId itemId) = "item/" <> toText itemId
+    endpoint (ItemId id') = itemEndpoint id'
 
 ------------------------------------------------------------------------------
 -- | JSON Instances
