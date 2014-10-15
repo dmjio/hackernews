@@ -23,6 +23,15 @@ data Item = ItemComment Comment
           | ItemJob Job
           deriving (Show)
 
+data MaxItemId = MaxItemId deriving (Show, Eq)
+newtype MaxItem = MaxItem Int deriving (Show, Eq)
+
+instance Endpoint MaxItemId MaxItem where
+    endpoint _ = "maxitem"
+
+instance FromJSON MaxItem where
+    parseJSON = fmap MaxItem . parseJSON
+
 instance Endpoint ItemId Item where
     endpoint (ItemId itemId) = "item/" <> toText itemId
 

@@ -1,4 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
 module Web.HackerNews.Story where
 
 import           Control.Applicative ((<$>), (<*>))
@@ -7,8 +8,10 @@ import           Data.Aeson          (FromJSON (parseJSON), Value (Object),
                                       (.:), (.!=), (.:?))
 import           Data.Text           (Text)
 import           Data.Time           (UTCTime)
+import           Data.Monoid         ((<>))
 
-import           Web.HackerNews.Util (fromSeconds)
+import           Web.HackerNews.Util (fromSeconds, toText)
+import           Web.HackerNews.Endpoint (Endpoint(..))
 
 ------------------------------------------------------------------------------
 -- | Types
@@ -28,8 +31,15 @@ newtype StoryId
   = StoryId Int
   deriving (Show, Eq)
 
-type TopStories = [Int]
-type MaxItem    = Int
+data TopStoriesId  = TopStoriesId deriving (Show, Eq)
+newtype TopStories = TopStories [Int] deriving (Show, Eq)
+------------------------------------------------------------------------------
+-- | Endpoint Instances
+instance Endpoint StoryId Story where
+    endpoint (StoryId storId) = "item/" <> toText storId
+
+instance Endpoint TopStoriesId TopStories where
+    endpoint _ = "topstories"
 
 ------------------------------------------------------------------------------
 -- | JSON Instances
@@ -45,4 +55,7 @@ instance FromJSON Story where
            <*> o .: "url"
            <*> o .:? "deleted" .!= False
    parseJSON _ = mzero
+
+instance FromJSON TopStories where
+   parseJSON = fmap TopStories . parseJSON
 
