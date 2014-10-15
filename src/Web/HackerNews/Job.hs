@@ -1,4 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
 module Web.HackerNews.Job where
 
 import           Control.Applicative ((<*>), (<$>))
@@ -7,8 +8,10 @@ import           Data.Aeson          (FromJSON (parseJSON), Value (Object),
                                       (.:), (.:?), (.!=))
 import           Data.Text           (Text)
 import           Data.Time           (UTCTime)
+import           Data.Monoid         ((<>))
 
-import           Web.HackerNews.Util (fromSeconds)
+import           Web.HackerNews.Util (fromSeconds, toText)
+import           Web.HackerNews.Endpoint (Endpoint(..))
 
 ------------------------------------------------------------------------------
 -- | Types
@@ -27,6 +30,10 @@ data Job = Job {
 newtype JobId
       = JobId Int
       deriving (Show, Eq)
+------------------------------------------------------------------------------
+-- | Endpoint Instances
+instance Endpoint JobId Job where
+    endpoint (JobId id') = "item/" <> toText id'
 
 ------------------------------------------------------------------------------
 -- | JSON Instances
