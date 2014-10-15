@@ -3,7 +3,6 @@ module Web.HackerNews
        ( -- * Hacker News Monad
          hackerNews
          -- * API Calls
-       , getEndpoint
        , getItem
        , getStory
        , getComment
@@ -35,14 +34,9 @@ module Web.HackerNews
        , TopStories
        ) where
 
-import           Data.Aeson                 (FromJSON)
-
 import           Web.HackerNews.Types
-import           Web.HackerNews.Client
+import           Web.HackerNews.Client (HackerNews, hackerNews)
 
--- | Generic function for making requests
-getEndpoint :: (Endpoint a b, FromJSON b) => a -> HackerNews (Maybe b)
-getEndpoint id' = buildHNRequest $ endpoint id'
 
 ------------------------------------------------------------------------------
 -- | Retrieve a `Item` by `ItemId`
