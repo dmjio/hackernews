@@ -3,11 +3,12 @@ module Web.HackerNews.Update where
 
 import           Control.Applicative ((<$>), (<*>))
 import           Control.Monad       (MonadPlus (mzero))
+
 import           Data.Aeson          (FromJSON (parseJSON), Value (Object),
                                       (.:), (.!=), (.:?))
 import           Data.Text           (Text)
 
-import           Web.HackerNews.Endpoint (Endpoint(..))
+import           Web.HackerNews.Endpoint (Endpoint(endpoint))
 
 ------------------------------------------------------------------------------
 -- | Types

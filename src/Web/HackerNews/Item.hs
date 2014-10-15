@@ -1,17 +1,19 @@
 {-# LANGUAGE OverloadedStrings, MultiParamTypeClasses #-}
 module Web.HackerNews.Item where
 
+import           Control.Applicative ((<$>))
 import           Control.Monad       (MonadPlus (mzero))
+
 import           Data.Aeson          (FromJSON (parseJSON), Value (Object), (.:))
 import           Data.Text           (Text)
 import           Data.Monoid         ((<>))
-import           Control.Applicative
-import           Web.HackerNews.Comment (Comment)
-import           Web.HackerNews.Poll (Poll, PollOpt)
-import           Web.HackerNews.Story (Story)
-import           Web.HackerNews.Job   (Job)
-import           Web.HackerNews.Endpoint (Endpoint(..))
-import           Web.HackerNews.Util (toText)
+
+import           Web.HackerNews.Comment  (Comment)
+import           Web.HackerNews.Poll     (Poll, PollOpt)
+import           Web.HackerNews.Story    (Story)
+import           Web.HackerNews.Job      (Job)
+import           Web.HackerNews.Endpoint (Endpoint(endpoint))
+import           Web.HackerNews.Util     (toText)
 
 newtype ItemId = ItemId Int deriving (Show,Eq)
 

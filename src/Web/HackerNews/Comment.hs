@@ -3,6 +3,7 @@ module Web.HackerNews.Comment where
 
 import           Control.Applicative ((<$>), (<*>))
 import           Control.Monad       (MonadPlus (mzero))
+
 import           Data.Aeson          (FromJSON (parseJSON), Value (Object),
                                       (.:), (.:?), (.!=))
 import           Data.Text           (Text)
@@ -10,7 +11,7 @@ import           Data.Time           (UTCTime)
 import           Data.Monoid         ((<>))
 
 import           Web.HackerNews.Util (fromSeconds, toText)
-import           Web.HackerNews.Endpoint (Endpoint(..))
+import           Web.HackerNews.Endpoint (Endpoint(endpoint))
 
 ------------------------------------------------------------------------------
 -- | Types
