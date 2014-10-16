@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 -- |
 -- Module      : Web.HackerNews
--- Copyright   : (c) David Johnson, 2014
+-- Copyright   : (c) David Johnson, Konstantin Zudov, 2014
 -- Maintainer  : djohnson.m@gmail.com
 -- Stability   : experimental
 -- Portability : POSIX
