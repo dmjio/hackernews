@@ -1,10 +1,11 @@
 {-# LANGUAGE OverloadedStrings, MultiParamTypeClasses , FunctionalDependencies #-}
 module Web.HackerNews.Endpoint where
 
-import           Data.Aeson          (FromJSON)
-import           Data.Text           (Text, append)
+import           Data.Aeson            (FromJSON)
+import           Data.Text             (Text, append)
+import           Network.Wreq          (Options, defaults)
 
-import           Web.HackerNews.Client (HackerNews, buildHNRequest)
+import           Web.HackerNews.Client (makeRequestWith)
 import           Web.HackerNews.Util   (toText)
 
 -- | Endpoint maps the id to the returned type on a type level
@@ -17,5 +18,9 @@ itemEndpoint :: Int -> Text
 itemEndpoint = append "item/" . toText
 
 -- | Generic function for making requests
-getEndpoint :: (Endpoint a b, FromJSON b) => a -> HackerNews (Maybe b)
-getEndpoint id' = buildHNRequest $ endpoint id'
+getEndpointWith :: (Endpoint a b, FromJSON b) => Options -> a -> IO (Maybe b)
+getEndpointWith opts = makeRequestWith opts . endpoint
+
+-- | Generic function for making requests with default options
+getEndpoint :: (Endpoint a b, FromJSON b) => a -> IO (Maybe b)
+getEndpoint = makeRequestWith defaults . endpoint
