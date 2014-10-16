@@ -1,4 +1,9 @@
-{-# LANGUAGE OverloadedStrings #-}
+-- |
+-- Module      : Web.HackerNews.Types
+-- Copyright   : (c) David Johnson, Konstantin Zudov, 2014
+-- Maintainer  : djohnson.m@gmail.com
+-- Stability   : experimental
+-- Portability : POSIX
 module Web.HackerNews.Types
        ( module H
        ) where

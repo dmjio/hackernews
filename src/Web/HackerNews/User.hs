@@ -1,20 +1,26 @@
-{-# LANGUAGE OverloadedStrings, MultiParamTypeClasses #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE OverloadedStrings     #-}
+-- |
+-- Module      : Web.HackerNews.User
+-- Copyright   : (c) David Johnson, Konstantin Zudov, 2014
+-- Maintainer  : djohnson.m@gmail.com
+-- Stability   : experimental
+-- Portability : POSIX
 module Web.HackerNews.User where
 
-import           Control.Applicative ((<*>), (<$>))
-import           Control.Monad       (MonadPlus (mzero))
+import           Control.Applicative     ((<$>), (<*>))
+import           Control.Monad           (MonadPlus (mzero))
+import           Data.Aeson              (FromJSON (parseJSON), Value (Object),
+                                          (.!=), (.:), (.:?))
+import           Data.Monoid             ((<>))
+import           Data.Text               (Text)
+import           Data.Time               (UTCTime)
 
-import           Data.Aeson          (FromJSON (parseJSON), Value (Object),
-                                      (.:), (.:?), (.!=))
-import           Data.Text           (Text)
-import           Data.Time           (UTCTime)
-import           Data.Monoid         ((<>))
-
-import           Web.HackerNews.Util (fromSeconds, monoidToMaybe)
-import           Web.HackerNews.Endpoint (Endpoint(endpoint))
+import           Web.HackerNews.Endpoint (Endpoint (endpoint))
+import           Web.HackerNews.Util     (fromSeconds, monoidToMaybe)
 
 ------------------------------------------------------------------------------
--- | Types
+-- | `User` Object
 data User = User {
     userAbout     :: Maybe Text
   , userCreated   :: UTCTime
@@ -23,8 +29,11 @@ data User = User {
   , userKarma     :: Int
   , userSubmitted :: [Int]
   , userDeleted   :: Bool
+  , userDead      :: Bool
   } deriving (Show)
 
+------------------------------------------------------------------------------
+-- | User ID for a `User` Object
 newtype UserId
       = UserId Text
       deriving (Show, Eq)
@@ -45,5 +54,6 @@ instance FromJSON User where
           <*> o .: "karma"
           <*> o .: "submitted"
           <*> o .:? "deleted" .!= False
+          <*> o .:? "dead" .!= False
   parseJSON _ = mzero
 
