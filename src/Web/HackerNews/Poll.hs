@@ -31,6 +31,7 @@ data Poll = Poll {
   , pollTitle   :: Text
   , pollType    :: Text
   , pollDeleted :: Bool
+  , pollDead :: Bool
   } deriving (Show, Eq)
 
 ------------------------------------------------------------------------------
@@ -44,6 +45,7 @@ data PollOpt = PollOpt {
   , pollOptTime    :: UTCTime
   , pollOptType    :: Text
   , pollOptDeleted :: Bool
+  , pollOptDead       :: Bool  
   } deriving (Show, Eq)
 
 ------------------------------------------------------------------------------
@@ -82,6 +84,7 @@ instance FromJSON Poll where
           <*> o .: "title"
           <*> o .: "type"
           <*> o .:? "deleted" .!= False
+          <*> o .:? "dead" .!= False          
   parseJSON _ = mzero
 
 ------------------------------------------------------------------------------
@@ -96,4 +99,5 @@ instance FromJSON PollOpt where
              <*> (fromSeconds <$> o .: "time")
              <*> o .: "type"
              <*> o .:? "deleted" .!= False
+             <*> o .:? "dead" .!= False             
   parseJSON _ = mzero

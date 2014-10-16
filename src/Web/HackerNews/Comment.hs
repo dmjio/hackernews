@@ -29,6 +29,7 @@ data Comment = Comment {
   , commentTime    :: UTCTime
   , commentType    :: Text
   , commentDeleted :: Bool
+  , commentDead    :: Bool
   } deriving Show
 
 ------------------------------------------------------------------------------
@@ -54,6 +55,7 @@ instance FromJSON Comment where
              <*> (fromSeconds <$> o .: "time")
              <*> o .: "type"
              <*> o .:? "deleted" .!= False
+             <*> o .:? "dead" .!= False
   parseJSON _ = mzero
 
 

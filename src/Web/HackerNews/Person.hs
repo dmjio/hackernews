@@ -10,7 +10,7 @@ module Web.HackerNews.Person where
 import           Control.Applicative ((<$>), (<*>))
 import           Control.Monad       (MonadPlus (mzero))
 import           Data.Aeson          (FromJSON (parseJSON), Value (Object),
-                                      (.:), (.:?), (.!=))
+                                      (.!=), (.:), (.:?))
 import           Data.Text           (Text)
 import           Data.Time           (UTCTime)
 
@@ -28,6 +28,7 @@ data Person = Person {
   , personType    :: Text
   , personUrl     :: Maybe Text
   , personDeleted :: Bool
+  , personDead    :: Bool
   } deriving (Show, Eq)
 
 ------------------------------------------------------------------------------
@@ -49,4 +50,5 @@ instance FromJSON Person where
             <*> o .: "type"
             <*> o .:? "url"
             <*> o .:? "deleted" .!= False
+            <*> o .:? "dead" .!= False
    parseJSON _ = mzero

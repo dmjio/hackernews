@@ -30,6 +30,7 @@ data Job = Job {
   , jobType    :: Text
   , jobUrl     :: Text
   , jobDeleted :: Bool
+  , jobDead    :: Bool
   } deriving (Show)
 
 ------------------------------------------------------------------------------
@@ -56,5 +57,6 @@ instance FromJSON Job where
           <*> o .: "type"
           <*> o .: "url"
           <*> o .:? "deleted" .!= False
+          <*> o .:? "dead" .!= False
   parseJSON _ = mzero
 

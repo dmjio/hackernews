@@ -22,6 +22,7 @@ data Update = Update {
     updateItems    :: [Int]
   , updateProfiles :: [Text]
   , updateDeleted  :: Bool
+  , updateDead     :: Bool
   } deriving (Show, Eq)
 
 ------------------------------------------------------------------------------
@@ -40,5 +41,6 @@ instance FromJSON Update where
      Update <$> o .: "items"
             <*> o .: "profiles"
             <*> o .:? "deleted" .!= False
+            <*> o .:? "dead" .!= False
   parseJSON _ = mzero
 

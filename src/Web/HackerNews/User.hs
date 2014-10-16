@@ -29,6 +29,7 @@ data User = User {
   , userKarma     :: Int
   , userSubmitted :: [Int]
   , userDeleted   :: Bool
+  , userDead      :: Bool
   } deriving (Show)
 
 ------------------------------------------------------------------------------
@@ -53,5 +54,6 @@ instance FromJSON User where
           <*> o .: "karma"
           <*> o .: "submitted"
           <*> o .:? "deleted" .!= False
+          <*> o .:? "dead" .!= False
   parseJSON _ = mzero
 

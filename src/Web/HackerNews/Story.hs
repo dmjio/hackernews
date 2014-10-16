@@ -30,6 +30,7 @@ data Story = Story {
   , storyType    :: Text
   , storyUrl     :: Text
   , storyDeleted :: Bool
+  , storyDead    :: Bool
   } deriving Show
 
 ------------------------------------------------------------------------------
@@ -69,6 +70,7 @@ instance FromJSON Story where
            <*> o .: "type"
            <*> o .: "url"
            <*> o .:? "deleted" .!= False
+           <*> o .:? "dead" .!= False
    parseJSON _ = mzero
 
 ------------------------------------------------------------------------------
