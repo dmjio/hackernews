@@ -17,10 +17,6 @@ class Endpoint id resp | id -> resp where
 itemEndpoint :: Int -> Text
 itemEndpoint = append "item/" . toText
 
--- | Generic function for making requests
+-- | Generic function for making requests with provided options
 getEndpointWith :: (Endpoint a b, FromJSON b) => Options -> a -> IO (Maybe b)
 getEndpointWith opts = makeRequestWith opts . endpoint
-
--- | Generic function for making requests with default options
-getEndpoint :: (Endpoint a b, FromJSON b) => a -> IO (Maybe b)
-getEndpoint = makeRequestWith defaults . endpoint
