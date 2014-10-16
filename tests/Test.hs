@@ -5,21 +5,22 @@ import           Data.Maybe     (isJust)
 import           Test.Hspec     (it, runIO, hspec, describe)
 import           Web.HackerNews
 import           Control.Applicative
+import           Network.Wreq   (withManager)
 
 main :: IO ()
-main = hspec $ do
-  describe "Hacker News API Tests" $ do
+main = withManager $ \opts -> hspec $ do
+  describe "Hacker News API Tests" $ do 
     (story, comment, user, job, poll, pollOpt, topStories, maxItem, updates) <- 
-      runIO $ hackerNews $ (,,,,,,,,)  <$> 
-        getStory   (StoryId 8863)      <*>
-        getComment (CommentId 2921983) <*>
-        getUser    (UserId "dmjio")    <*>
-        getJob     (JobId 8437631)     <*>
-        getPoll    (PollId 126809)     <*>
-        getPollOpt (PollOptId 160705)  <*>
-        getTopStories                  <*>
-        getMaxItem                     <*>
-        getUpdates
+      runIO $ (,,,,,,,,)                        <$> 
+        getStoryWith opts   (StoryId 8863)      <*>
+        getCommentWith opts (CommentId 2921983) <*>
+        getUserWith opts    (UserId "dmjio")    <*>
+        getJobWith opts     (JobId 8437631)     <*>
+        getPollWith opts    (PollId 126809)     <*>
+        getPollOptWith opts (PollOptId 160705)  <*>
+        getTopStoriesWith opts                  <*>
+        getMaxItemWith opts                     <*>
+        getUpdatesWith opts
     it "Retrieves a Story"     $ isJust story
     it "Retrieves a Comment"   $ isJust comment
     it "Retrieves a User"      $ isJust user

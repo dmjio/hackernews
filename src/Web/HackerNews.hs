@@ -6,10 +6,8 @@
 -- Stability   : experimental
 -- Portability : POSIX
 module Web.HackerNews
-       ( -- * Hacker News Monad
-         hackerNews
-         -- * API Calls
-       , getItem
+       ( -- * API Calls
+         getItem
        , getStory
        , getComment
        , getPoll
@@ -20,7 +18,6 @@ module Web.HackerNews
        , getMaxItem
        , getUpdates
          -- * Types
-       , HackerNews
        , Item      (..)
        , ItemId    (..)
        , Comment   (..)
@@ -40,56 +37,57 @@ module Web.HackerNews
        , TopStories
        ) where
 
+import           Network.Wreq (Options)
+
 import           Web.HackerNews.Types
-import           Web.HackerNews.Client (HackerNews, hackerNews)
+import           Web.HackerNews.Endpoint (getEndpointWith)
 
 ------------------------------------------------------------------------------
--- | Retrieve a `Item` by `ItemId`
-getItem :: ItemId -> HackerNews (Maybe Item)
-getItem = getEndpoint
+-- | Retrieve a `Item` by `ItemId` using provided `Options`
+getItem :: Options -> ItemId -> IO (Maybe Item)
+getItem = getEndpointWith
 
 ------------------------------------------------------------------------------
--- | Retrieve a `Story` by `StoryId`
-getStory :: StoryId -> HackerNews (Maybe Story)
-getStory = getEndpoint
+-- | Retrieve a `Story` by `StoryId` using provided `Options`
+getStory :: Options -> StoryId -> IO (Maybe Story)
+getStory = getEndpointWith
 
 ------------------------------------------------------------------------------
--- | Retrieve a `Comment` by `CommentId`
-getComment :: CommentId -> HackerNews (Maybe Comment)
-getComment = getEndpoint
+-- | Retrieve a `Comment` by `CommentId` using provided `Options`
+getComment :: Options -> CommentId -> IO (Maybe Comment)
+getComment = getEndpointWith
 
 ------------------------------------------------------------------------------
--- | Retrieve a `Poll` by `PollId`
-getPoll :: PollId -> HackerNews (Maybe Poll)
-getPoll = getEndpoint
+-- | Retrieve a `Poll` by `PollId` using provided `Options`
+getPoll :: Options -> PollId -> IO (Maybe Poll)
+getPoll = getEndpointWith
 
 ------------------------------------------------------------------------------
--- | Retrieve a `PollOpt` by `PollOptId`
-getPollOpt :: PollOptId -> HackerNews (Maybe PollOpt)
-getPollOpt = getEndpoint
+-- | Retrieve a `PollOpt` by `PollOptId` using provided `Options`
+getPollOpt :: Options -> PollOptId -> IO (Maybe PollOpt)
+getPollOpt = getEndpointWith
 
 ------------------------------------------------------------------------------
--- | Retrieve a `User` by `UserId`
-getUser :: UserId -> HackerNews (Maybe User)
-getUser = getEndpoint
+-- | Retrieve a `User` by `UserId` using provided `Options`
+getUser :: Options -> UserId -> IO (Maybe User)
+getUser = getEndpointWith
 
 ------------------------------------------------------------------------------
--- | Retrieve a Job
-getJob :: JobId -> HackerNews (Maybe Job)
-getJob = getEndpoint
+-- | Retrieve a Job using provided `Options`
+getJob :: Options -> JobId -> IO (Maybe Job)
+getJob = getEndpointWith
 
 ------------------------------------------------------------------------------
--- | Retrieve the Top Stories on Hacker News
-getTopStories :: HackerNews (Maybe TopStories)
-getTopStories = getEndpoint TopStoriesId
+-- | Retrieve the Top Stories on Hacker News using provided `Options`
+getTopStories :: Options -> IO (Maybe TopStories)
+getTopStories = flip getEndpointWith TopStoriesId
 
 ------------------------------------------------------------------------------
--- | Retrieve the largest ItemId
-getMaxItem :: HackerNews (Maybe MaxItem)
-getMaxItem = getEndpoint MaxItemId
+-- | Retrieve the largest ItemId using provided `Options`
+getMaxItem :: Options -> IO (Maybe MaxItem)
+getMaxItem = flip getEndpointWith MaxItemId
 
 ------------------------------------------------------------------------------
--- | Retrieve the latest updates
-getUpdates :: HackerNews (Maybe Update)
-getUpdates = getEndpoint UpdateId
-
+-- | Retrieve the latest updates using provided `Options`
+getUpdates :: Options -> IO (Maybe Update)
+getUpdates = flip getEndpointWith UpdateId

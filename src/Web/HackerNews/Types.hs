@@ -15,7 +15,7 @@ import           Web.HackerNews.User    as H
 import           Web.HackerNews.Update  as H
 import           Web.HackerNews.Job     as H
 import           Web.HackerNews.Item    as H
-import           Web.HackerNews.Endpoint as H
+import           Web.HackerNews.Endpoint as H (Endpoint(..))
 
 
 

@@ -26,16 +26,16 @@ library
                      , Web.HackerNews.Util
                      , Web.HackerNews.Endpoint
   hs-source-dirs:      src
-  build-depends:       HsOpenSSL    >= 0.10.5
-                     , aeson        >= 0.8.0.1
+  build-depends:       aeson        >= 0.8.0.1
                      , attoparsec   >= 0.12.1.2
                      , base         >= 4.7 && <4.8
                      , bytestring   >= 0.10.4.0
-                     , http-streams >= 0.7.2.2
-                     , io-streams   >= 1.1.4.6
                      , text         >= 1.2.0.0
                      , time         >= 1.4.2
                      , transformers >= 0.3.0.0
+                     , wreq         >= 0.2
+                     , lens         >= 4.4
+                     , lens-aeson   >= 1
   default-language:    Haskell2010
 
 Test-Suite tests
@@ -47,6 +47,7 @@ Test-Suite tests
                        , hackernews
                        , hspec >= 1.11.4
                        , transformers
+                       , wreq
     default-language:    Haskell2010
     ghc-options:         -Wall
 
