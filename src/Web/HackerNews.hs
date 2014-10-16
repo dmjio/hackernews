@@ -34,6 +34,7 @@ module Web.HackerNews
 import           Network.Wreq (Options)
 
 import           Web.HackerNews.Types
+import           Web.HackerNews.Endpoint (getEndpointWith)
 
 ------------------------------------------------------------------------------
 -- | Retrieve a `Item` by `ItemId` using provided `Options`
