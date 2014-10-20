@@ -28,5 +28,5 @@ itemEndpoint = append "item/" . toText
 
 ------------------------------------------------------------------------------
 -- | Generic function for making requests
-getEndpoint :: (Endpoint a b, FromJSON b) => a -> HackerNews (Maybe b)
+getEndpoint :: (Endpoint a b, FromJSON b) => a -> HackerNews b
 getEndpoint id' = buildHNRequest $ endpoint id'
