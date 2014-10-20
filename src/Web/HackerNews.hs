@@ -21,6 +21,7 @@ module Web.HackerNews
        , getUpdates
          -- * Types
        , HackerNews
+       , HackerNewsError (..)
        , Item      (..)
        , ItemId    (..)
        , Comment   (..)
@@ -41,55 +42,55 @@ module Web.HackerNews
        ) where
 
 import           Web.HackerNews.Types
-import           Web.HackerNews.Client (HackerNews, hackerNews)
+import           Web.HackerNews.Client (HackerNews, hackerNews, HackerNewsError(..))
 
 ------------------------------------------------------------------------------
 -- | Retrieve a `Item` by `ItemId`
-getItem :: ItemId -> HackerNews (Maybe Item)
+getItem :: ItemId -> HackerNews Item
 getItem = getEndpoint
 
 ------------------------------------------------------------------------------
 -- | Retrieve a `Story` by `StoryId`
-getStory :: StoryId -> HackerNews (Maybe Story)
+getStory :: StoryId -> HackerNews Story
 getStory = getEndpoint
 
 ------------------------------------------------------------------------------
 -- | Retrieve a `Comment` by `CommentId`
-getComment :: CommentId -> HackerNews (Maybe Comment)
+getComment :: CommentId -> HackerNews Comment
 getComment = getEndpoint
 
 ------------------------------------------------------------------------------
 -- | Retrieve a `Poll` by `PollId`
-getPoll :: PollId -> HackerNews (Maybe Poll)
+getPoll :: PollId -> HackerNews Poll
 getPoll = getEndpoint
 
 ------------------------------------------------------------------------------
 -- | Retrieve a `PollOpt` by `PollOptId`
-getPollOpt :: PollOptId -> HackerNews (Maybe PollOpt)
+getPollOpt :: PollOptId -> HackerNews PollOpt
 getPollOpt = getEndpoint
 
 ------------------------------------------------------------------------------
 -- | Retrieve a `User` by `UserId`
-getUser :: UserId -> HackerNews (Maybe User)
+getUser :: UserId -> HackerNews User
 getUser = getEndpoint
 
 ------------------------------------------------------------------------------
 -- | Retrieve a Job
-getJob :: JobId -> HackerNews (Maybe Job)
+getJob :: JobId -> HackerNews Job
 getJob = getEndpoint
 
 ------------------------------------------------------------------------------
 -- | Retrieve the Top Stories on Hacker News
-getTopStories :: HackerNews (Maybe TopStories)
+getTopStories :: HackerNews TopStories
 getTopStories = getEndpoint TopStoriesId
 
 ------------------------------------------------------------------------------
 -- | Retrieve the largest ItemId
-getMaxItem :: HackerNews (Maybe MaxItem)
+getMaxItem :: HackerNews MaxItem
 getMaxItem = getEndpoint MaxItemId
 
 ------------------------------------------------------------------------------
 -- | Retrieve the latest updates
-getUpdates :: HackerNews (Maybe Update)
+getUpdates :: HackerNews Update
 getUpdates = getEndpoint UpdateId
 
