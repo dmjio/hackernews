@@ -38,6 +38,7 @@ type HackerNews a = EitherT HackerNewsError (ReaderT Connection IO) a
 data HackerNewsError =
     ConnectionError
   | ParseError
+  | NotFound
   | RequestError
   deriving (Show, Eq)
 
@@ -70,13 +71,14 @@ buildHNRequest url = do
     case bytes of
       Nothing -> left RequestError
       Just bs -> do
+        liftIO $ print bs
         let xs = rights [parseOnly value bs, parseOnly json bs]
         case xs of
           []    -> left ParseError
           x : _ ->
             case fromJSON x of
              Success jsonBody -> right jsonBody
-             _                -> left ParseError
+             _                -> left NotFound
     
 
 
