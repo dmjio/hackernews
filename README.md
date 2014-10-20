@@ -1,4 +1,4 @@
-hackernews [![Hackage](https://img.shields.io/hackage/v/hackernews.svg?style=flat)](https://hackage.haskell.org/package/hackernews)[![Build Status](https://travis-ci.org/dmjio/hackernews.svg?branch=master)](https://travis-ci.org/dmjio/hackernews)
+hackernews [![Hackage](https://img.shields.io/hackage/v/hackernews.svg?style=flat)](https://hackage.haskell.org/package/hackernews) [![Build Status](https://travis-ci.org/dmjio/hackernews.svg?branch=master&style=flat)](https://travis-ci.org/dmjio/hackernews)
 ==========
 Hacker News API for Haskell
 
