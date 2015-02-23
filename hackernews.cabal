@@ -1,5 +1,5 @@
 name:                hackernews
-version:             0.3.1.0
+version:             0.3.1.1
 description:         API for news.ycombinator.com
 license:             MIT
 synopsis:            API for Hacker News
@@ -11,7 +11,7 @@ build-type:          Simple
 cabal-version:       >=1.10
 
 library
-  ghc-options:         -Wall -threaded -rtsopts
+  ghc-options:         -Wall -rtsopts
   exposed-modules:     Web.HackerNews
   other-modules:       Web.HackerNews.Types
                      , Web.HackerNews.Client
