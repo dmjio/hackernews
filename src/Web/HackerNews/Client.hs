@@ -1,10 +1,13 @@
 {-# LANGUAGE OverloadedStrings #-}
+------------------------------------------------------------------------------
 -- |
 -- Module      : Web.HackerNews.Client
 -- Copyright   : (c) David Johnson, 2014
 -- Maintainer  : djohnson.m@gmail.com
 -- Stability   : experimental
 -- Portability : POSIX
+-- | 
+------------------------------------------------------------------------------
 module Web.HackerNews.Client
        ( hackerNews
        , buildHNRequest
@@ -12,13 +15,14 @@ module Web.HackerNews.Client
        , HackerNewsError (..)
        ) where
 
+------------------------------------------------------------------------------
 import           Data.Aeson                 hiding (Result)
 import           Data.Aeson.Parser          (value)
 import           Data.Attoparsec.ByteString (parseOnly)
 import           Data.Either                (rights)
 import           Control.Monad.Trans.Either  
 import           Control.Exception          (try, SomeException)
-
+import          Control.Monad               (when)
 import           Control.Monad.IO.Class     (liftIO)
 import           Control.Monad.Trans.Class  (lift)
 import           Control.Monad.Trans.Reader (ReaderT, ask, runReaderT)
@@ -28,6 +32,12 @@ import           Data.Text                 (Text)
 import           Network.Http.Client
 import           OpenSSL                    (withOpenSSL)
 import qualified System.IO.Streams          as Streams
+------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------
+-- | Debug flag
+debug :: Bool
+debug = False
 
 ------------------------------------------------------------------------------
 -- | Core Type
@@ -71,7 +81,7 @@ buildHNRequest url = do
     case bytes of
       Nothing -> left RequestError
       Just bs -> do
-        liftIO $ print bs
+        when debug $ liftIO . print $ bs
         let xs = rights [parseOnly value bs, parseOnly json bs]
         case xs of
           []    -> left ParseError
