@@ -37,8 +37,8 @@ module Web.HackerNews
        , Job       (..)
        , JobId     (..)
        , Update    (..)
-       , MaxItem
-       , TopStories
+       , MaxItem   (..)
+       , TopStories (..)
        ) where
 
 import           Web.HackerNews.Types

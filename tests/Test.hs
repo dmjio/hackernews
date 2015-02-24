@@ -2,7 +2,7 @@
 module Main where
 
 import           Data.Either    (isRight)
-import           Test.Hspec     (it, runIO, hspec, describe, shouldSatisfy)
+import           Test.Hspec     (it, hspec, describe, shouldSatisfy)
 import           Web.HackerNews
 import           Control.Applicative
 
