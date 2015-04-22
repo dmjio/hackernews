@@ -5,6 +5,11 @@ Hacker News API for Haskell
 ###Documentation
 <https://github.com/HackerNews/API>
 
+Now it support GHCJS! Just install it using:
+```bash
+cabal install --ghcjs --flags=ghcjs
+```
+
 ###Tests
 ```bash
 cabal configure && cabal test
