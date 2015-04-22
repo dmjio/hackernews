@@ -1,4 +1,4 @@
-{-# LANGUAGE CPP, OverloadedStrings, ForeignFunctionInterface, JavaScriptFFI, DeriveGeneric, DeriveDataTypeable #-}
+{-# LANGUAGE CPP, OverloadedStrings, ForeignFunctionInterface, JavaScriptFFI#-}
 ------------------------------------------------------------------------------
 -- |
 -- Module      : Web.HackerNews.Client
