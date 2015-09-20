@@ -1,0 +1,15 @@
+dependencies:
+  override:
+    - cabal update
+    - cabal sandbox init
+    - cabal install --dependencies-only --enable-tests
+
+machine:
+  ghc:
+    version: 7.10.1
+
+test:
+  override:
+   - cabal configure --enable-tests && cabal build
+   - dist/build/tests/tests
+
