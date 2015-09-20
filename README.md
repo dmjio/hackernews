@@ -1,5 +1,11 @@
-hackernews [![Hackage](https://img.shields.io/hackage/v/hackernews.svg?style=flat)](https://hackage.haskell.org/package/hackernews) [![Build Status](https://img.shields.io/travis/dmjio/hackernews.svg?style=flat)](https://travis-ci.org/dmjio/hackernews)
+hackernews 
 ==========
+![Hackage](https://img.shields.io/hackage/v/hackernews.svg)
+![Hackage Dependencies](https://img.shields.io/hackage-deps/v/hackernews.svg)
+![Haskell Programming Language](https://img.shields.io/badge/language-Haskell-blue.svg)
+![BSD3 License](http://img.shields.io/badge/license-BSD3-brightgreen.svg)
+![Build Status](https://img.shields.io/circleci/project/dmjio/hackernews.svg)
+
 Hacker News API for Haskell
 
 ###Documentation
