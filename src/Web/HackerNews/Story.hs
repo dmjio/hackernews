@@ -28,7 +28,7 @@ data Story = Story {
   , storyTime    :: UTCTime
   , storyTitle   :: Text
   , storyType    :: Text
-  , storyUrl     :: Text
+  , storyUrl     :: Maybe Text
   , storyDeleted :: Bool
   , storyDead    :: Bool
   } deriving Show
@@ -68,7 +68,7 @@ instance FromJSON Story where
            <*> (fromSeconds <$> o .: "time")
            <*> o .: "title"
            <*> o .: "type"
-           <*> o .: "url"
+           <*> o .:? "url"
            <*> o .:? "deleted" .!= False
            <*> o .:? "dead" .!= False
    parseJSON _ = mzero
