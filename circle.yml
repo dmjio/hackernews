@@ -1,15 +1,15 @@
 dependencies:
   override:
-    - cabal update
-    - cabal sandbox init
-    - cabal install --dependencies-only --enable-tests
+      - stack setup
+      - stack install --test --only-dependencies --no-terminal
+  cache_directories:
+      - ~/.stack
 
 machine:
-  ghc:
-    version: 7.10.1
+  pre:
+    - echo 'deb http://download.fpcomplete.com/ubuntu precise main'|sudo tee /etc/apt/sources.list.d/fpco.list
+    - sudo apt-get update && sudo apt-get install stack -y
 
 test:
   override:
-   - cabal configure --enable-tests && cabal build
-   - dist/build/tests/tests
-
+    - stack test --no-terminal
