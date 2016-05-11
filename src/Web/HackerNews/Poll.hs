@@ -26,7 +26,7 @@ data Poll = Poll {
   , pollKids    :: [Int]
   , pollParts   :: [Int]
   , pollScore   :: Int
-  , pollText    :: Text
+  , pollText    :: Maybe Text
   , pollTime    :: UTCTime
   , pollTitle   :: Text
   , pollType    :: Text
@@ -41,7 +41,7 @@ data PollOpt = PollOpt {
   , pollOptId      :: PollOptId
   , pollOptParent  :: Int
   , pollOptScore   :: Int
-  , pollOptText    :: Text
+  , pollOptText    :: Maybe Text
   , pollOptTime    :: UTCTime
   , pollOptType    :: Text
   , pollOptDeleted :: Bool
@@ -79,7 +79,7 @@ instance FromJSON Poll where
           <*> o .: "kids"
           <*> o .: "parts"
           <*> o .: "score"
-          <*> o .: "text"
+          <*> o .:? "text"
           <*> (fromSeconds <$> o .: "time")
           <*> o .: "title"
           <*> o .: "type"
@@ -95,7 +95,7 @@ instance FromJSON PollOpt where
              <*> (PollOptId <$> o .: "id")
              <*> o .: "parent"
              <*> o .: "score"
-             <*> o .: "text"
+             <*> o .:? "text"
              <*> (fromSeconds <$> o .: "time")
              <*> o .: "type"
              <*> o .:? "deleted" .!= False

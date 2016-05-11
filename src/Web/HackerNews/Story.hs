@@ -23,7 +23,7 @@ import           Web.HackerNews.Util     (fromSeconds)
 data Story = Story {
     storyBy      :: Text
   , storyId      :: StoryId
-  , storyKids    :: [Int]
+  , storyKids    :: Maybe [Int]
   , storyScore   :: Int
   , storyTime    :: UTCTime
   , storyTitle   :: Text
@@ -63,7 +63,7 @@ instance FromJSON Story where
    parseJSON (Object o) =
      Story <$> o .: "by"
            <*> (StoryId <$> o .: "id")
-           <*> o .: "kids"
+           <*> o .:? "kids"
            <*> o .: "score"
            <*> (fromSeconds <$> o .: "time")
            <*> o .: "title"
