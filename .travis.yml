@@ -1,3 +1,2 @@
-language: haskell
-ghc: 7.8.3
-cabal: 1.20.0.3
+language: nix
+script: nix-build release.nix

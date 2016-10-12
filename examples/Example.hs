@@ -1,13 +1,21 @@
 {-# LANGUAGE OverloadedStrings #-}
-module Example where
+module Main where
 
-import           Control.Monad  (liftM2)
-import           Web.HackerNews (UserId (..), getUser, hackerNews)
+import Network.HTTP.Client
+import Network.HTTP.Client.TLS
+
+import Web.HackerNews
 
 main :: IO ()
-main = print =<< hackerNews (liftM2 (,) one two)
-  where
-    one   = getUser (UserId "dmjio")
-    two   = getUser (UserId "dmj")
-
-
+main = do
+ mgr <- newManager tlsManagerSettings
+ print =<< getItem mgr (ItemId 1000)
+ print =<< getUser mgr (UserId "dmjio")
+ print =<< getMaxItem mgr
+ print =<< getTopStories mgr
+ print =<< getNewStories mgr
+ print =<< getBestStories mgr
+ print =<< getAskStories mgr
+ print =<< getShowStories mgr
+ print =<< getJobStories mgr
+ print =<< getUpdates mgr
