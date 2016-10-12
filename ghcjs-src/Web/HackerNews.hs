@@ -6,7 +6,7 @@
 -- Maintainer  : djohnson.m@gmail.com
 -- Stability   : experimental
 -- Portability : POSIX
--- 
+--
 ------------------------------------------------------------------------------
 module Web.HackerNews
        ( hackerNews
@@ -103,4 +103,3 @@ foreign import javascript interruptible "var req = new XMLHttpRequest(); \
   req.open('GET', $1, true);\
   req.send();"
   js_ajax :: JSString -> IO Object
-

@@ -4,21 +4,21 @@
 , http-types, string-conversions
 }:
 let
+ phantomjs  = nixpkgs.nodePackags.phantomjs;
  ghcjs-base = nixpkgs.haskell.packages.ghcjs.ghcjs-base;
- lib = import "${nixpkgs.path}/pkgs/development/haskell-modules/lib.nix" { pkgs = nixpkgs; };
- basic-sop' = lib.dontHaddock basic-sop;
+ basic-sop' = nixpkgs.haskell.lib.dontHaddock basic-sop;
  ghc-deps = [
     aeson base http-client servant servant-client text
     transformers http-client-tls http-types string-conversions
    ];
- ghcjs-deps = [ ghcjs-base aeson base text transformers hspec ];
- ghc-testdeps = [ base hspec http-client-tls transformers
-        quickcheck-instances
-        servant-quickcheck generics-sop
-        basic-sop' ];
+ ghcjs-deps     = [ ghcjs-base aeson base text transformers ];
+ ghcjs-testdeps = [ phantomjs ] ++ ghcjs-deps;
+ ghc-testdeps   = [ base hspec http-client-tls transformers
+                    quickcheck-instances servant-quickcheck
+                    generics-sop basic-sop' ];
  testDeps =
    if compiler == "ghcjs"
-     then ghcjs-deps
+     then ghcjs-testdeps
      else ghc-testdeps;
  exeDeps =
    if compiler == "ghcjs"

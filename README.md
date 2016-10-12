@@ -4,6 +4,7 @@ hackernews
 ![Hackage Dependencies](https://img.shields.io/hackage-deps/v/hackernews.svg)
 ![Haskell Programming Language](https://img.shields.io/badge/language-Haskell-blue.svg)
 ![MIT License](http://img.shields.io/badge/license-MIT-brightgreen.svg)
+[![Build Status](https://travis-ci.org/dmjio/hackernews.svg?branch=master)](https://travis-ci.org/dmjio/hackernews)
 
 Hacker News API for Haskell
 
