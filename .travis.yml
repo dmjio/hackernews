@@ -1,10 +1,10 @@
 language: nix
-cache:
-  directories:
-     - /nix
 
 script:
+  - nix-channel --list
   - nix-channel --remove nixpkgs
   - nix-channel --add https://nixos.org/channels/nixos-16.09 nixpkgs
   - nix-channel --update
   - nix-build release.nix
+  - ls -lah result
+  - phantomjs jsbits/options.js result/bin/ghcjs-tests/ghcjs-tests.jsexe/index.html
