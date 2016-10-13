@@ -20,18 +20,29 @@ executable example
     hs-source-dirs: ghcjs-examples
   else
     build-depends: base, hackernews, http-client-tls, http-client
-    hs-source-dirs: examples
+    hs-source-dirs: ghc-examples
 
 executable ghcjs-tests
   main-is: Test.hs
   if !impl(ghcjs)
     buildable: False
   hs-source-dirs: ghcjs-tests
-  build-depends: base, hackernews, ghcjs-base, hspec
+  build-depends: base
+               , hackernews
+               , ghcjs-base
+               , hspec
+               , basic-sop
+               , generics-sop
+               , quickcheck-instances
+               , aeson
+               , QuickCheck
   default-language: Haskell2010
 
 library
   exposed-modules:  Web.HackerNews
+                  , Web.HackerNews.Types
+  hs-source-dirs: src
+  build-depends: servant
   if impl(ghcjs)
     ghcjs-options:  -O2 -Wall -Werror
     hs-source-dirs: ghcjs-src
@@ -39,14 +50,14 @@ library
                   , attoparsec
                   , base < 5
                   , ghcjs-base
+                  , string-conversions
                   , text
                   , transformers
   else
     ghc-options:  -O2 -Wall -Werror
-    hs-source-dirs: src
+    hs-source-dirs: ghc-src
     build-depends: aeson
                  , base < 5
-                 , servant
                  , servant-client
                  , http-client
                  , string-conversions
@@ -55,12 +66,12 @@ library
                  , transformers
   default-language:    Haskell2010
 
-Test-Suite tests
+Test-Suite ghc-tests
   type:                exitcode-stdio-1.0
   default-language:    Haskell2010
-  main-is: Test.hs
+  main-is:             Test.hs
   ghc-options:         -rtsopts -threaded -Wall
-  hs-source-dirs:      tests
+  hs-source-dirs:      ghc-tests
   build-depends:       aeson
                      , base
                      , basic-sop

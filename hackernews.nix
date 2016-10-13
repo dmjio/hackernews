@@ -10,9 +10,13 @@ let
  ghc-deps = [
     aeson base http-client servant servant-client text
     transformers http-client-tls http-types string-conversions
+    quickcheck-instances
    ];
- ghcjs-deps     = [ ghcjs-base aeson base text transformers ];
- ghcjs-testdeps = [ phantomjs hspec ] ++ ghcjs-deps;
+ ghcjs-deps = [ basic-sop' generics-sop
+                ghcjs-base aeson base text
+                transformers hspec servant quickcheck-instances
+                string-conversions ];
+ ghcjs-testdeps = [ phantomjs ] ++ ghcjs-deps;
  ghc-testdeps   = [ base hspec http-client-tls transformers
                     quickcheck-instances servant-quickcheck
                     generics-sop basic-sop' ];

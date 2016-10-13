@@ -1,4 +1,5 @@
-{-# LANGUAGE CPP, OverloadedStrings, ForeignFunctionInterface, JavaScriptFFI #-}
+{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE OverloadedStrings   #-}
 ------------------------------------------------------------------------------
 -- |
 -- Module      : Web.HackerNews
@@ -9,97 +10,114 @@
 --
 ------------------------------------------------------------------------------
 module Web.HackerNews
-       ( hackerNews
-       , buildHNRequest
-       , HackerNews
-       , HackerNewsError (..)
+       ( -- * API functions
+         getItem
+       , getUser
+       , getMaxItem
+       , getTopStories
+       , getNewStories
+       , getBestStories
+       , getAskStories
+       , getShowStories
+       , getJobStories
+       , getUpdates
+       -- * Core Types
+       , Item        (..)
+       , User        (..)
+       , Updates     (..)
+       , MaxItem     (..)
+       , TopStories  (..)
+       , NewStories  (..)
+       , BestStories (..)
+       , AskStories  (..)
+       , ShowStories (..)
+       , JobStories  (..)
+       --- * Supporting Types
+       , UserId      (..)
+       , ItemId      (..)
+       , Deleted     (..)
+       , ItemType    (..)
+       , UserName    (..)
+       , Time        (..)
+       , ItemText    (..)
+       , Dead        (..)
+       , Parent      (..)
+       , Kids        (..)
+       , URL         (..)
+       , Score       (..)
+       , Title       (..)
+       , Parts       (..)
+       , Descendants (..)
+       , Delay       (..)
+       , Created     (..)
+       , Karma       (..)
+       , About       (..)
+       , Submitted   (..)
        ) where
 
 ------------------------------------------------------------------------------
-import           Data.Aeson                 hiding (Result, Object)
-import           Data.Aeson.Parser          (value)
-import qualified Data.Text.Encoding         as T
-import           Data.Text                  (Text)
-import           Data.Monoid                ((<>))
-import           Control.Monad.Trans.Except
-import           Data.Either                (rights)
-import           Data.Maybe
-import           Control.Monad.IO.Class     (liftIO)
-import           Data.Attoparsec.ByteString (parseOnly)
-import           Control.Monad              (when)
-import           GHCJS.Types
-import           GHCJS.Marshal.Pure
-import           Data.JSString.Text
-import           JavaScript.Object
+import Data.Aeson
+import Data.Monoid
+import JavaScript.Web.XMLHttpRequest
+import Data.String.Conversions
+import Data.JSString
+import Data.JSString.Text
 
-------------------------------------------------------------------------------
--- | Debug flag
-debug :: Bool
-debug = False
+import Web.HackerNews.Types
 
-------------------------------------------------------------------------------
--- | Core Type
-type HackerNews a = ExceptT HackerNewsError IO a
-------------------------------------------------------------------------------
--- | Error Types
-data HackerNewsError =
-    ConnectionError
-  | ParseError
-  | NotFound
-  | RequestError
-  deriving (Show, Eq)
+-- | Retrieve `Item`
+getItem :: ItemId -> IO (Either HackerNewsError Item)
+getItem (ItemId x) = issueAjax (Just "item") $ textToJSString $ cs (show x)
 
--- | HackerNews API request method
-hackerNews :: FromJSON a => HackerNews a -> IO (Either HackerNewsError a)
-hackerNews = runExceptT
+-- | Retrieve `User`
+getUser :: UserId -> IO (Either HackerNewsError User)
+getUser (UserId u) = issueAjax (Just "user") (textToJSString u)
 
-------------------------------------------------------------------------------
--- | Request Builder for API
-buildHNRequest :: FromJSON a => Text -> HackerNews a
-buildHNRequest path = do
-  let url = "https://hacker-news.firebaseio.com/v0/" <> path <> ".json"
-  res <- liftIO $ ajax url
-  case arError res of
-   Just et -> case et of
-     "connection-error" -> throwE ConnectionError
-     "request-error" -> throwE RequestError
-     _ -> throwE NotFound
-   Nothing -> do
-     let t = T.encodeUtf8 $ fromMaybe "" $ arData res
-         xs = rights [parseOnly value t, parseOnly json t]
-     when debug $ liftIO . print $ t
-     case xs of
-      [] -> throwE ParseError
-      x : _ ->
-        case fromJSON x of
-         Success jsonBody -> pure jsonBody
-         _                -> throwE NotFound
+-- | Retrieve `MaxItem`
+getMaxItem :: IO (Either HackerNewsError MaxItem)
+getMaxItem = issueAjax Nothing "maxitem"
 
-data AjaxResult = AjaxResult { arData :: Maybe Text,
-                               arError :: Maybe Text
-                             } deriving (Ord, Eq, Show)
+-- | Retrieve `TopStories`
+getTopStories :: IO (Either HackerNewsError TopStories)
+getTopStories = issueAjax Nothing "topstories"
 
-ajax :: Text -> IO AjaxResult
-ajax url = do
-  res <- js_ajax (textToJSString url)
-  err <- getProp ("error" :: JSString) res
-  dat <- getProp ("data" :: JSString) res
-  let d = getTextDat dat
-      e = getTextDat err
-  return (AjaxResult d e)
-  where getTextDat dt = if isNull dt then Nothing else Just (pFromJSVal dt)
+-- | Retrieve `NewStories`
+getNewStories :: IO (Either HackerNewsError NewStories)
+getNewStories = issueAjax Nothing "newstories"
 
-foreign import javascript interruptible "var req = new XMLHttpRequest(); \
-  if (!req)\
-    $c({error: 'connection-error', data: null});\
-  req.onreadystatechange = function() {\
-    if (req.readyState === 4) {\
-      if (req.status === 200) {\
-        $c({data: req.responseText, error: null});\
-      } else\
-        $c({error: 'request-error', data: null});\
-    }\
-  };\
-  req.open('GET', $1, true);\
-  req.send();"
-  js_ajax :: JSString -> IO Object
+-- | Retrieve `BestStories`
+getBestStories :: IO (Either HackerNewsError BestStories)
+getBestStories = issueAjax Nothing "beststories"
+
+-- | Retrieve `AskStories`
+getAskStories :: IO (Either HackerNewsError AskStories)
+getAskStories = issueAjax Nothing "askstories"
+
+-- | Retrieve `ShowStories`
+getShowStories :: IO (Either HackerNewsError ShowStories)
+getShowStories = issueAjax Nothing "showstories"
+
+-- | Retrieve `JobStories`
+getJobStories :: IO (Either HackerNewsError JobStories)
+getJobStories = issueAjax Nothing "jobstories"
+
+-- | Retrieve `Updates`
+getUpdates :: IO (Either HackerNewsError Updates)
+getUpdates = issueAjax Nothing "updates"
+
+issueAjax :: FromJSON a => Maybe JSString -> JSString -> IO (Either HackerNewsError a)
+issueAjax maybePath uri = do
+  response <- xhrByteString request
+  pure $ case contents response of
+    Nothing -> Left NotFound
+    Just "null" -> Left NotFound
+    Just x ->
+      case eitherDecode (cs x) of
+        Left l -> Left $ DecodeFailureError (cs l) mempty
+        Right r -> Right r
+    where
+      request = Request GET url Nothing [] False NoData
+      url = "https://hacker-news.firebaseio.com/v0/"
+              <> maybe mempty (\path -> path <> "/") maybePath
+              <> uri
+              <> ".json"

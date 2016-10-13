@@ -5,13 +5,13 @@ if (system.args.length !== 2) {
     phantom.exit(1);
 }
 var page = require('webpage').create();
+
 page.onConsoleMessage = function (msg) {
     console.log(msg);
 };
 page.onError = function (msg, trace) {
+    error.append(msg);
     console.log(msg);
-    if (trace != null)
-        console.log(trace.join('\n'));
 };
 page.open(system.args[1], function (status) {
     if (status !== "success") {
