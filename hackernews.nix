@@ -23,7 +23,7 @@ let
  exeDeps =
    if compiler == "ghcjs"
      then [ base ghcjs-base ]
-     else [ http-client-tls http-client ];
+     else [ base http-client-tls http-client ];
  libDeps =
    if compiler == "ghcjs"
      then ghcjs-deps

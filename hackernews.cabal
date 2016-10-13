@@ -14,11 +14,13 @@ extra-source-files:
 
 executable example
   main-is: Example.hs
-  if impl(ghcjs)
-    buildable: False
-  hs-source-dirs: examples
-  build-depends: base, hackernews, http-client, http-client-tls
   default-language: Haskell2010
+  if impl (ghcjs)
+    build-depends: base, hackernews, ghcjs-base
+    hs-source-dirs: ghcjs-examples
+  else
+    build-depends: base, hackernews, http-client-tls, http-client
+    hs-source-dirs: examples
 
 executable ghcjs-tests
   main-is: Test.hs
