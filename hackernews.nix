@@ -12,7 +12,7 @@ let
     transformers http-client-tls http-types string-conversions
    ];
  ghcjs-deps     = [ ghcjs-base aeson base text transformers ];
- ghcjs-testdeps = [ phantomjs ] ++ ghcjs-deps;
+ ghcjs-testdeps = [ phantomjs hspec ] ++ ghcjs-deps;
  ghc-testdeps   = [ base hspec http-client-tls transformers
                     quickcheck-instances servant-quickcheck
                     generics-sop basic-sop' ];

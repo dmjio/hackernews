@@ -27,7 +27,7 @@ executable ghcjs-tests
   if !impl(ghcjs)
     buildable: False
   hs-source-dirs: ghcjs-tests
-  build-depends: base, hackernews, ghcjs-base
+  build-depends: base, hackernews, ghcjs-base, hspec
   default-language: Haskell2010
 
 library
