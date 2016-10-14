@@ -10,8 +10,13 @@ category:            Web
 build-type:          Simple
 cabal-version:       >=1.10
 extra-source-files:
+    jsbits/options.js
     README.md
-
+    LICENSE
+    ghc-examples/Example.hs
+    ghcjs-examples/Example.hs
+    ghc-tests/Test.hs
+    ghcjs-tests/Test.hs
 executable example
   main-is: Example.hs
   default-language: Haskell2010
