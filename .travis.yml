@@ -1,5 +1,9 @@
 language: nix
 
+cache:
+ directories:
+   - .stack-work
+
 script:
   - nix-channel --list
   - nix-channel --remove nixpkgs
@@ -7,3 +11,6 @@ script:
   - nix-channel --update
   - nix-build release.nix
   - phantomjs --web-security=no jsbits/options.js result-2/bin/ghcjs-tests.jsexe/index.html
+  - stack setup
+  - stack test
+

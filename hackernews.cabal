@@ -31,10 +31,9 @@ executable example
 
 executable ghcjs-tests
   main-is: Test.hs
-  if !impl(ghcjs)
-    buildable: False
-  hs-source-dirs: ghcjs-tests
-  build-depends: base
+  if impl(ghcjs)
+    hs-source-dirs: ghcjs-tests
+    build-depends: base
                , hackernews == 1.0.*
                , ghcjs-base
                , hspec
@@ -43,7 +42,9 @@ executable ghcjs-tests
                , generics-sop
                , quickcheck-instances
                , aeson
-               , QuickCheck
+                 , QuickCheck
+  else
+    buildable: False
   default-language: Haskell2010
 
 library
@@ -82,7 +83,7 @@ Test-Suite ghc-tests
   hs-source-dirs:      ghc-tests
   build-depends:       aeson
                      , base
-                     , basic-sop == 0.2.*
+                     , basic-sop
                      , generics-sop == 0.2.*
                      , hackernews == 1.0.*
                      , hspec == 2.2.*
