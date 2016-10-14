@@ -1,25 +1,23 @@
 { mkDerivation, aeson, base, hspec, http-client, http-client-tls
-, servant, servant-client, stdenv, text, transformers, compiler
-, quickcheck-instances, basic-sop, nixpkgs, generics-sop
-, http-types, string-conversions, hspec-core
+, servant, servant-client, stdenv, text, transformers, compiler, QuickCheck
+, quickcheck-instances, nixpkgs, http-types, string-conversions, hspec-core
 }:
 let
  phantomjs  = nixpkgs.nodePackags.phantomjs;
  ghcjs-base = nixpkgs.haskell.packages.ghcjs.ghcjs-base;
- basic-sop' = nixpkgs.haskell.lib.dontHaddock basic-sop;
  ghc-deps = [
     aeson base http-client servant servant-client text
     transformers http-client-tls http-types string-conversions
-    quickcheck-instances
+    quickcheck-instances QuickCheck
    ];
- ghcjs-deps = [ basic-sop' generics-sop hspec-core
+ ghcjs-deps = [ hspec-core QuickCheck
                 ghcjs-base aeson base text
                 transformers hspec servant quickcheck-instances
                 string-conversions ];
  ghcjs-testdeps = [ phantomjs ] ++ ghcjs-deps;
  ghc-testdeps   = [ base hspec http-client-tls transformers
                     quickcheck-instances
-                    generics-sop basic-sop' ];
+                  ];
  testDeps =
    if compiler == "ghcjs"
      then ghcjs-testdeps
