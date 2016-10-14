@@ -1,6 +1,6 @@
 { mkDerivation, aeson, base, hspec, http-client, http-client-tls
 , servant, servant-client, stdenv, text, transformers, compiler
-, quickcheck-instances, basic-sop, servant-quickcheck, nixpkgs, generics-sop
+, quickcheck-instances, basic-sop, nixpkgs, generics-sop
 , http-types, string-conversions, hspec-core
 }:
 let
@@ -18,7 +18,7 @@ let
                 string-conversions ];
  ghcjs-testdeps = [ phantomjs ] ++ ghcjs-deps;
  ghc-testdeps   = [ base hspec http-client-tls transformers
-                    quickcheck-instances servant-quickcheck
+                    quickcheck-instances
                     generics-sop basic-sop' ];
  testDeps =
    if compiler == "ghcjs"
