@@ -52,6 +52,7 @@ import Web.HackerNews
 
 main :: IO ()
 main = do
+ mgr <- newManager tlsManagerSettings
  print =<< getItem mgr (ItemId 1000)
  print =<< getUser mgr (UserId "dmjio")
  print =<< getMaxItem mgr
