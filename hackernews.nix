@@ -1,7 +1,7 @@
 { mkDerivation, aeson, base, hspec, http-client, http-client-tls
 , servant, servant-client, stdenv, text, transformers, compiler
 , quickcheck-instances, basic-sop, nixpkgs, generics-sop
-, http-types, string-conversions, hspec-core
+, http-types, string-conversions, hspec-core, stack
 }:
 let
  phantomjs  = nixpkgs.nodePackags.phantomjs;
@@ -10,7 +10,7 @@ let
  ghc-deps = [
     aeson base http-client servant servant-client text
     transformers http-client-tls http-types string-conversions
-    quickcheck-instances
+    quickcheck-instances stack
    ];
  ghcjs-deps = [ basic-sop' generics-sop hspec-core
                 ghcjs-base aeson base text
@@ -18,7 +18,7 @@ let
                 string-conversions ];
  ghcjs-testdeps = [ phantomjs ] ++ ghcjs-deps;
  ghc-testdeps   = [ base hspec http-client-tls transformers
-                    quickcheck-instances
+                    quickcheck-instances stack
                     generics-sop basic-sop' ];
  testDeps =
    if compiler == "ghcjs"
