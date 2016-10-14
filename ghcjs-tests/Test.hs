@@ -1,14 +1,18 @@
 {-# LANGUAGE OverloadedStrings    #-}
 {-# LANGUAGE ScopedTypeVariables  #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
+{-# LANGUAGE RecordWildCards      #-}
 module Main where
 
 import Control.Applicative
 import Data.Aeson
 import Data.Either               (isRight)
+import Data.JSString
 import Generics.SOP.Arbitrary
 import Generics.SOP.Universe
-import Test.Hspec                (it, hspec, describe, shouldSatisfy, shouldBe)
+import System.Exit
+import Test.Hspec (it, hspec, describe, shouldSatisfy, shouldBe)
+import Test.Hspec.Core.Runner (hspecResult, Summary(..))
 import Test.QuickCheck
 import Test.QuickCheck.Instances ()
 
@@ -67,7 +71,7 @@ instance Generic Descendants
 
 main :: IO ()
 main = do
- hspec $ do
+ Summary{..} <- hspecResult $ do
   describe "HackerNews API tests" $ do
     it "should round trip Updates JSON" $ property $ \(x :: Updates) ->
        Just x == decode (encode x)
@@ -98,4 +102,9 @@ main = do
       (`shouldSatisfy` isRight) =<< getJobStories
     it "should retrieve updates" $ do
       (`shouldSatisfy` isRight) =<< getUpdates
- putStr "done"
+ case summaryFailures of
+   x | x > 0 -> putStrLn "error"
+     | otherwise -> putStrLn "done"
+
+
+
