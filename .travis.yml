@@ -9,6 +9,7 @@ script:
   - nix-channel --remove nixpkgs
   - nix-channel --add https://nixos.org/channels/nixos-16.09 nixpkgs
   - nix-channel --update
+  - nix-env -iA haskellPackages.stack -f '<nixpkgs>'
   - nix-build release.nix
   - phantomjs --web-security=no jsbits/options.js result-2/bin/ghcjs-tests.jsexe/index.html
   - stack setup
