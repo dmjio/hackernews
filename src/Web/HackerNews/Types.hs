@@ -129,7 +129,7 @@ newtype ItemId = ItemId Int
   deriving (Show, Eq, ToJSON, FromJSON, ToHttpApiData, Generic, Arbitrary)
 
 -- | `true` if the item is deleted.
-newtype Deleted = Deleted Int
+newtype Deleted = Deleted Bool
   deriving (Show, Eq, ToJSON, FromJSON, Generic, Arbitrary)
 
 -- | The type of item. One of "job", "story", "comment", "poll", or "pollopt"
