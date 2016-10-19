@@ -25,7 +25,7 @@ import Test.QuickCheck.Instances ()
 
 -- | The item and profile changes are at <https://hacker-news.firebaseio.com/v0/updates>
 data Updates = Updates  {
-      items :: [Int]
+      items :: [ItemId]
        -- ^ Updated `Item`s
     , profiles :: [UserName]
        -- ^ Updated `UserName`s
@@ -39,31 +39,31 @@ instance Arbitrary Updates where
 
 -- | The current largest item id is at <https://hacker-news.firebaseio.com/v0/maxitem>.
 -- You can walk backward from here to discover all items.
-newtype MaxItem = MaxItem Int
+newtype MaxItem = MaxItem ItemId
   deriving (Show, Eq, ToJSON, FromJSON, Generic, Arbitrary)
 
 -- | <https://hacker-news.firebaseio.com/v0/topstories>
-newtype TopStories = TopStories [Int]
+newtype TopStories = TopStories [ItemId]
   deriving (Show, Eq, ToJSON, FromJSON, Generic, Arbitrary)
 
 -- | <https://hacker-news.firebaseio.com/v0/newstories>
-newtype NewStories = NewStories [Int]
+newtype NewStories = NewStories [ItemId]
   deriving (Show, Eq, ToJSON, FromJSON, Generic, Arbitrary)
 
 -- | <https://hacker-news.firebaseio.com/v0/beststories>
-newtype BestStories = BestStories [Int]
+newtype BestStories = BestStories [ItemId]
   deriving (Show, Eq, ToJSON, FromJSON, Generic, Arbitrary)
 
 -- | <https://hacker-news.firebaseio.com/v0/askstories>
-newtype AskStories = AskStories [Int]
+newtype AskStories = AskStories [ItemId]
   deriving (Show, Eq, ToJSON, FromJSON, Generic, Arbitrary)
 
 -- | <https://hacker-news.firebaseio.com/v0/showstories>
-newtype ShowStories = ShowStories [Int]
+newtype ShowStories = ShowStories [ItemId]
   deriving (Show, Eq, ToJSON, FromJSON, Generic, Arbitrary)
 
 -- | <https://hacker-news.firebaseio.com/v0/jobstories>
-newtype JobStories = JobStories [Int]
+newtype JobStories = JobStories [ItemId]
   deriving (Show, Eq, ToJSON, FromJSON, Generic, Arbitrary)
 
 -- | Users are identified by case-sensitive ids, and live under
@@ -121,7 +121,7 @@ newtype About = About T.Text
   deriving (Show, Eq, ToJSON, FromJSON, Generic, Arbitrary)
 
 -- | List of the user's stories, polls and comments.
-newtype Submitted = Submitted [Int]
+newtype Submitted = Submitted [ItemId]
   deriving (Show, Eq, ToJSON, FromJSON, Generic, Arbitrary)
 
 -- | The item's unique id.
@@ -129,7 +129,7 @@ newtype ItemId = ItemId Int
   deriving (Show, Eq, ToJSON, FromJSON, ToHttpApiData, Generic, Arbitrary)
 
 -- | `true` if the item is deleted.
-newtype Deleted = Deleted Int
+newtype Deleted = Deleted Bool
   deriving (Show, Eq, ToJSON, FromJSON, Generic, Arbitrary)
 
 -- | The type of item. One of "job", "story", "comment", "poll", or "pollopt"
@@ -161,7 +161,7 @@ newtype Dead = Dead Bool
 
 -- | The item's parent. For comments, either another comment or the relevant story.
 -- For pollopts, the relevant poll.
-newtype Parent = Parent Int
+newtype Parent = Parent ItemId
   deriving (Show, Eq, ToJSON, FromJSON, Generic, Arbitrary)
 
 -- | Creation date of the item, in Unix Time.
@@ -169,7 +169,7 @@ newtype Time = Time Integer
   deriving (Show, Eq, ToJSON, FromJSON, Generic, Arbitrary)
 
 -- | The ids of the item's comments, in ranked display order.
-newtype Kids = Kids [Int]
+newtype Kids = Kids [ItemId]
   deriving (Show, Eq, ToJSON, FromJSON, Generic, Arbitrary)
 
 -- | The URL of the story.
@@ -185,7 +185,7 @@ newtype Title = Title T.Text
   deriving (Show, Eq, ToJSON, FromJSON, Generic, Arbitrary)
 
 -- | A list of related pollopts, in display order.
-newtype Parts = Parts [Int]
+newtype Parts = Parts [ItemId]
   deriving (Show, Eq, ToJSON, FromJSON, Generic, Arbitrary)
 
 -- | In the case of stories or polls, the total comment count.
