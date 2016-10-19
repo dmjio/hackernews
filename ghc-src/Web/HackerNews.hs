@@ -71,7 +71,6 @@ module Web.HackerNews
   , HackerNewsError (..)
   ) where
 
-import           Control.Monad.Trans.Except
 import           Data.Bifunctor
 import           Data.Monoid
 import           Data.Proxy
@@ -131,76 +130,99 @@ toError = first go
     go (ConnectionError ex) =
       HNConnectionError $ cs (show ex)
 
+mkClientEnv :: Manager -> ClientEnv
+mkClientEnv = flip ClientEnv hackerNewsURL
+
 -- | Retrieve `Item`
 getItem :: Manager -> ItemId -> IO (Either HackerNewsError Item)
 getItem mgr itemId =
   toError <$> do
-    runExceptT $ getItem' itemId mgr hackerNewsURL
+    runClientM
+      (getItem' itemId)
+      (mkClientEnv mgr)
 
 -- | Retrieve `User`
 getUser :: Manager -> UserId -> IO (Either HackerNewsError User)
 getUser mgr userId =
   toError <$> do
-    runExceptT $ getUser' userId mgr hackerNewsURL
+    runClientM
+      (getUser' userId)
+      (ClientEnv mgr hackerNewsURL)
 
 -- | Retrieve `MaxItem`
 getMaxItem :: Manager -> IO (Either HackerNewsError MaxItem)
 getMaxItem mgr =
   toError <$> do
-    runExceptT $ getMaxItem' mgr hackerNewsURL
+    runClientM
+      getMaxItem'
+      (ClientEnv mgr hackerNewsURL)
 
 -- | Retrieve `TopStories`
 getTopStories :: Manager -> IO (Either HackerNewsError TopStories)
 getTopStories mgr =
   toError <$> do
-    runExceptT $ getTopStories' mgr hackerNewsURL
+    runClientM
+      getTopStories'
+      (mkClientEnv mgr)
 
 -- | Retrieve `NewStories`
 getNewStories :: Manager -> IO (Either HackerNewsError NewStories)
 getNewStories mgr =
   toError <$> do
-    runExceptT $ getNewStories' mgr hackerNewsURL
+    runClientM
+      getNewStories'
+      (mkClientEnv mgr)
 
 -- | Retrieve `BestStories`
 getBestStories :: Manager -> IO (Either HackerNewsError BestStories)
 getBestStories mgr =
   toError <$> do
-    runExceptT $ getBestStories' mgr hackerNewsURL
+    runClientM
+      getBestStories'
+      (mkClientEnv mgr)
 
 -- | Retrieve `AskStories`
 getAskStories :: Manager -> IO (Either HackerNewsError AskStories)
 getAskStories mgr =
   toError <$> do
-    runExceptT $ getAskStories' mgr hackerNewsURL
+    runClientM
+      getAskStories'
+      (mkClientEnv mgr)
 
 -- | Retrieve `ShowStories`
 getShowStories :: Manager -> IO (Either HackerNewsError ShowStories)
 getShowStories mgr =
   toError <$> do
-    runExceptT $ getShowStories' mgr hackerNewsURL
+    runClientM
+      getShowStories'
+      (mkClientEnv mgr)
 
 -- | Retrieve `JobStories`
 getJobStories :: Manager -> IO (Either HackerNewsError JobStories)
 getJobStories mgr =
   toError <$> do
-    runExceptT $ getJobStories' mgr hackerNewsURL
+    runClientM
+      getJobStories'
+      (mkClientEnv mgr)
 
 -- | Retrieve `Updates`
 getUpdates :: Manager -> IO (Either HackerNewsError Updates)
 getUpdates mgr =
   toError <$> do
-    runExceptT $ getUpdates' mgr hackerNewsURL
+    runClientM
+      getUpdates'
+      (mkClientEnv mgr)
 
-getItem' :: ItemId -> Manager -> BaseUrl -> ClientM Item
-getUser' :: UserId -> Manager -> BaseUrl -> ClientM User
-getMaxItem' :: Manager -> BaseUrl -> ClientM MaxItem
-getTopStories' :: Manager -> BaseUrl -> ClientM TopStories
-getNewStories' :: Manager -> BaseUrl -> ClientM NewStories
-getBestStories' :: Manager -> BaseUrl -> ClientM BestStories
-getAskStories' :: Manager -> BaseUrl -> ClientM AskStories
-getShowStories' :: Manager -> BaseUrl -> ClientM ShowStories
-getJobStories' :: Manager -> BaseUrl -> ClientM JobStories
-getUpdates' :: Manager -> BaseUrl -> ClientM Updates
+getItem' :: ItemId -> ClientM Item
+getUser' :: UserId -> ClientM User
+getMaxItem' :: ClientM MaxItem
+getTopStories' :: ClientM TopStories
+getNewStories' :: ClientM NewStories
+getBestStories' :: ClientM BestStories
+getAskStories' :: ClientM AskStories
+getShowStories' :: ClientM ShowStories
+getJobStories' :: ClientM JobStories
+getUpdates' ::  ClientM Updates
 
 getItem'
   :<|> getUser'

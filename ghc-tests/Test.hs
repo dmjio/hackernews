@@ -3,7 +3,6 @@
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 module Main where
 
-import Control.Applicative
 import Data.Aeson
 import Data.Either               (isRight)
 import Network.HTTP.Client
