@@ -1,5 +1,5 @@
 name:                hackernews
-version:             1.1.0.0
+version:             1.1.1.0
 description:         API for news.ycombinator.com
 license:             MIT
 synopsis:            API for Hacker News
@@ -90,7 +90,7 @@ Test-Suite ghc-tests
   build-depends:       aeson
                      , base
                      , hackernews == 1.1.*
-                     , hspec == 2.3.*
+                     , hspec
                      , http-client-tls
                      , http-client
                      , QuickCheck
