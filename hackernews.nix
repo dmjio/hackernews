@@ -42,7 +42,7 @@ let
      else ghc-deps;
 in mkDerivation {
   pname = "hackernews";
-  version = "1.0.0.0";
+  version = "1.1.1.0";
   src = ./.;
   isExecutable = true;
   isLibrary = true;
