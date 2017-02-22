@@ -1,27 +1,31 @@
 language: nix
 
 matrix:
+  fast_finish: true
   include:
-    - env: SCRIPT=build/ghcjs.nix
-    - env: SCRIPT=build/ghcjsHEAD.nix
-    - env: SCRIPT=build/ghc802.nix
-    - env: SCRIPT=build/ghc801.nix
-    - env: SCRIPT=build/ghc7103.nix
-    - env: SCRIPT=build/ghc7102.nix
-    - env: SCRIPT=build/ghc784.nix
-    - env: SCRIPT=build/ghc783.nix
-    - env: SCRIPT=build/ghc763.nix
+    - env: GHCVER=ghcjs
+    - env: GHCVER=ghcjsHEAD
+    - env: GHCVER=ghcHEAD
+    - env: GHCVER=ghc802
+    - env: GHCVER=ghc801
+    - env: GHCVER=ghc7103
+    - env: GHCVER=ghc7102
+    - env: GHCVER=ghc784
+    - env: GHCVER=ghc783
+    - env: GHCVER=ghc763
   allow_failures:
-    - env: SCRIPT=build/ghc7103.nix
-    - env: SCRIPT=build/ghc7102.nix
-    - env: SCRIPT=build/ghc784.nix
-    - env: SCRIPT=build/ghc783.nix
-    - env: SCRIPT=build/ghc763.nix
-    - env: SCRIPT=build/ghcHEAD.nix
-    - env: SCRIPT=build/ghcjsHEAD.nix
+    - env: GHCVER=ghcHEAD
+    - env: GHCVER=ghcjsHEAD
+    - env: GHCVER=ghc7103
+    - env: GHCVER=ghc7102
+    - env: GHCVER=ghc784
+    - env: GHCVER=ghc783
+    - env: GHCVER=ghc763
 
-script:
+before_install:
   - nix-channel --list
   - nix-channel --update
-  - nix-build ./$SCRIPT
 
+script:
+  - nix-build -A hackernews --argstr compiler $GHCVER
+  - ./build/phantomjs.sh

@@ -1,3 +1,3 @@
-if [ "$SCRIPT" = "ghcjs.nix" ]; then
-  phantomjs --web-security=no jsbits/options.js result-2/bin/ghcjs-tests.jsexe/index.html;
+if [ "$GHCVER" = "ghcjs" ]; then
+  phantomjs --web-security=no jsbits/options.js result/bin/ghcjs-tests.jsexe/index.html;
 fi
