@@ -28,16 +28,17 @@ let
  ghc-testdeps   = [ base hspec http-client-tls transformers
                     quickcheck-instances
                   ];
+ isGhcjs = compiler == "ghcjs" || compiler == "ghcjsHEAD";
  testDeps =
-   if compiler == "ghcjs"
+   if isGhcjs
      then ghcjs-testdeps
      else ghc-testdeps;
  exeDeps =
-   if compiler == "ghcjs"
+   if isGhcjs
      then [ base ghcjs-base ]
      else [ base http-client-tls http-client ];
  libDeps =
-   if compiler == "ghcjs"
+   if isGhcjs
      then ghcjs-deps
      else ghc-deps;
 in mkDerivation {
