@@ -38,6 +38,7 @@ in mkDerivation {
   src = ./.;
   isExecutable = true;
   isLibrary = true;
+  jailbreak = isGhcjs;
   libraryHaskellDepends = libDeps;
   executableHaskellDepends = exeDeps;
   testHaskellDepends = testDeps;
