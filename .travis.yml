@@ -3,7 +3,6 @@ language: nix
 matrix:
   fast_finish: true
   include:
-    - env: GHCVER=ghcjs
     - env: GHCVER=ghcjsHEAD
     - env: GHCVER=ghcHEAD
     - env: GHCVER=ghc802
@@ -14,8 +13,9 @@ matrix:
     - env: GHCVER=ghc783
     - env: GHCVER=ghc763
   allow_failures:
-    - env: GHCVER=ghcHEAD
+    - env: GHCVER=ghcjs
     - env: GHCVER=ghcjsHEAD
+    - env: GHCVER=ghcHEAD
     - env: GHCVER=ghc7103
     - env: GHCVER=ghc7102
     - env: GHCVER=ghc784
