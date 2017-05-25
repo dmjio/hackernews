@@ -1,5 +1,5 @@
 name:                hackernews
-version:             1.1.1.0
+version:             1.1.2.0
 description:         API for news.ycombinator.com
 license:             MIT
 synopsis:            API for Hacker News
