@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP                        #-}
 {-# LANGUAGE RecordWildCards            #-}
 {-# LANGUAGE OverloadedStrings          #-}
 {-# LANGUAGE TypeFamilies               #-}
@@ -118,7 +119,11 @@ toError :: Either ServantError ok -> Either HackerNewsError ok
 toError = first go
   where
     go :: ServantError -> HackerNewsError
+#if MIN_VERSION_servant_client(0,11,0)
+    go (FailureResponse _ Status{..} _ body) =
+#else
     go (FailureResponse Status{..} _ body) =
+#endif
       FailureResponseError statusCode (cs statusMessage) (cs body)
     go (DecodeFailure _ _ "null") = NotFound
     go (DecodeFailure err _ body) =
