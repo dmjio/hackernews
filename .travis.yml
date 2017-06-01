@@ -16,6 +16,7 @@ matrix:
     - env: GHCVER=ghcjs
     - env: GHCVER=ghcjsHEAD
     - env: GHCVER=ghcHEAD
+    - env: GHCVER=ghc801
     - env: GHCVER=ghc7103
     - env: GHCVER=ghc7102
     - env: GHCVER=ghc784
