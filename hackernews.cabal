@@ -1,5 +1,5 @@
 name:                hackernews
-version:             1.2.0.0
+version:             1.3.0.0
 description:         API for news.ycombinator.com
 license:             MIT
 synopsis:            API for Hacker News
@@ -75,7 +75,7 @@ library
                  , servant-client >= 0.9 && < 0.12
                  , http-client == 0.5.*
                  , string-conversions == 0.4.*
-                 , http-types == 0.9.*
+                 , http-types >= 0.9
                  , text == 1.2.*
   default-language:    Haskell2010
 
