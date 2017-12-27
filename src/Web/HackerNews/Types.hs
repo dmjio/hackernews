@@ -27,7 +27,7 @@ import Test.QuickCheck.Instances ()
 data Updates = Updates  {
       items :: [ItemId]
        -- ^ Updated `Item`s
-    , profiles :: [UserName]
+    , profiles :: [UserId]
        -- ^ Updated `UserName`s
    } deriving (Show, Eq, Generic)
 
@@ -147,10 +147,6 @@ instance FromJSON ItemType where
   parseJSON = genericParseJSON
     defaultOptions { constructorTagModifier = map toLower }
 
--- | The username of the item's author.
-newtype UserName = UserName T.Text
-  deriving (Show, Eq, ToJSON, FromJSON, Generic, Arbitrary)
-
 -- | The comment, story or poll text. HTML.
 newtype ItemText = ItemText T.Text
   deriving (Show, Eq, ToJSON, FromJSON, Generic, Arbitrary)
@@ -199,7 +195,7 @@ data Item = Item {
       itemId          :: Maybe ItemId
     , itemDeleted     :: Maybe Deleted
     , itemType        :: ItemType
-    , itemBy          :: Maybe UserName
+    , itemBy          :: Maybe UserId
     , itemTime        :: Maybe Time
     , itemText        :: Maybe ItemText
     , itemDead        :: Maybe Dead

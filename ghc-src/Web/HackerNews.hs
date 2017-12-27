@@ -52,7 +52,6 @@ module Web.HackerNews
   , ItemId      (..)
   , Deleted     (..)
   , ItemType    (..)
-  , UserName    (..)
   , Time        (..)
   , ItemText    (..)
   , Dead        (..)
