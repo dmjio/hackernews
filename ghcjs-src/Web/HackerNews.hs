@@ -3,8 +3,8 @@
 ------------------------------------------------------------------------------
 -- |
 -- Module      : Web.HackerNews
--- Copyright   : (c) David Johnson, 2014-2016
--- Maintainer  : djohnson.m@gmail.com
+-- Copyright   : (c) David Johnson, 2014-2025
+-- Maintainer  : code@dmj.io
 -- Stability   : experimental
 -- Portability : POSIX
 --

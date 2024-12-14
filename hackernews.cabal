@@ -5,7 +5,7 @@ license:             MIT
 synopsis:            API for Hacker News
 license-file:        LICENSE
 author:              David Johnson
-maintainer:          djohnson.m@gmail.com
+maintainer:          code@dmj.io
 category:            Web
 build-type:          Simple
 cabal-version:       >=1.10
